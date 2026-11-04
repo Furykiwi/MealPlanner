@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-NZ">
+<html lang="en-NZ" data-theme="midnight">
 <head>
 <meta charset="UTF-8">
 <!-- Native iOS Viewports & Web App Meta -->
@@ -7,11 +7,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="MY 10–8">
-<meta name="theme-color" content="#173f32">
+<meta name="theme-color" content="#0f172a">
 
 <!-- Inline SVG Favicon / Apple Touch Icon -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23173f32'/><circle cx='50' cy='50' r='32' fill='none' stroke='%23c8612c' stroke-width='8'/><path d='M50 26v24l16 10' stroke='%23ffffff' stroke-width='6' stroke-linecap='round'/></svg>">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23173f32'/><circle cx='50' cy='50' r='32' fill='none' stroke='%23c8612c' stroke-width='8'/><path d='M50 26v24l16 10' stroke='%23ffffff' stroke-width='6' stroke-linecap='round'/></svg>">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230f172a'/><circle cx='50' cy='50' r='32' fill='none' stroke='%2310b981' stroke-width='8'/><path d='M50 26v24l16 10' stroke='%23ffffff' stroke-width='6' stroke-linecap='round'/></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230f172a'/><circle cx='50' cy='50' r='32' fill='none' stroke='%2310b981' stroke-width='8'/><path d='M50 26v24l16 10' stroke='%23ffffff' stroke-width='6' stroke-linecap='round'/></svg>">
 
 <title>MY 10–8 | Intermittent Fasting & Meal Planner</title>
 
@@ -31,7 +31,8 @@
             card: 'var(--theme-card)',
             textMain: 'var(--theme-text-main)',
             textMuted: 'var(--theme-text-muted)',
-            border: 'var(--theme-border)'
+            border: 'var(--theme-border)',
+            subtle: 'var(--theme-card-subtle)'
           }
         },
         fontFamily: {
@@ -51,22 +52,7 @@
     --sal: env(safe-area-inset-left, 0px);
     --sar: env(safe-area-inset-right, 0px);
 
-    /* THEME 1: Forest & Terracotta (Default Warm Earthy) */
-    --theme-primary: #173f32;
-    --theme-primary-mid: #235242;
-    --theme-accent: #c8612c;
-    --theme-accent-light: #fbece4;
-    --theme-bg: #f5f0e6;
-    --theme-card: #ffffff;
-    --theme-text-main: #1e2824;
-    --theme-text-muted: #68756f;
-    --theme-border: #e4decb;
-    --theme-ring-track: rgba(255, 255, 255, 0.15);
-    --theme-card-subtle: #f8f5ee;
-  }
-
-  /* THEME 2: Midnight & Neon Mint (Dark Mode) */
-  [data-theme="midnight"] {
+    /* THEME 1: Midnight & Neon Mint (DEFAULT DARK MODE) */
     --theme-primary: #0f172a;
     --theme-primary-mid: #1e293b;
     --theme-accent: #10b981;
@@ -78,6 +64,23 @@
     --theme-border: #2e3d52;
     --theme-ring-track: rgba(255, 255, 255, 0.12);
     --theme-card-subtle: #121a28;
+    --theme-input-bg: #0f172a;
+  }
+
+  /* THEME 2: Forest & Terracotta */
+  [data-theme="forest"] {
+    --theme-primary: #173f32;
+    --theme-primary-mid: #235242;
+    --theme-accent: #c8612c;
+    --theme-accent-light: #fbece4;
+    --theme-bg: #f5f0e6;
+    --theme-card: #ffffff;
+    --theme-text-main: #1e2824;
+    --theme-text-muted: #68756f;
+    --theme-border: #e4decb;
+    --theme-ring-track: rgba(255, 255, 255, 0.15);
+    --theme-card-subtle: #f8f5ee;
+    --theme-input-bg: #f5f0e6;
   }
 
   /* THEME 3: Nordic Sage & Warm Oat */
@@ -93,6 +96,7 @@
     --theme-border: #ded8cb;
     --theme-ring-track: rgba(255, 255, 255, 0.15);
     --theme-card-subtle: #f8f6f0;
+    --theme-input-bg: #f4f0e8;
   }
 
   /* THEME 4: Ocean & Amber */
@@ -108,6 +112,7 @@
     --theme-border: #cbd5e1;
     --theme-ring-track: rgba(255, 255, 255, 0.15);
     --theme-card-subtle: #f8fafc;
+    --theme-input-bg: #f1f5f9;
   }
 
   /* THEME 5: Minimal Slate & Indigo */
@@ -123,6 +128,7 @@
     --theme-border: #e2e8f0;
     --theme-ring-track: rgba(255, 255, 255, 0.15);
     --theme-card-subtle: #f1f5f9;
+    --theme-input-bg: #f8fafc;
   }
 
   body {
@@ -165,9 +171,16 @@
   .ios-card {
     background: var(--theme-card);
     border: 1px solid var(--theme-border);
-    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.15);
     border-radius: 22px;
     transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+
+  /* Dynamic select and inputs */
+  select, input {
+    background-color: var(--theme-input-bg);
+    color: var(--theme-text-main);
+    border-color: var(--theme-border);
   }
 
   /* iOS Active Press Response */
@@ -195,11 +208,11 @@
 <body class="min-h-screen flex flex-col justify-between antialiased">
 
   <!-- TOP HEADER (iOS Header with Theme Picker Button) -->
-  <header class="text-white shadow-md sticky top-0 z-30 transition-all duration-300">
+  <header class="text-white shadow-md sticky top-0 z-30 transition-all duration-300 border-b border-white/10">
     <div class="max-w-2xl mx-auto flex items-center justify-between py-3">
       <div>
         <div class="flex items-center gap-1.5">
-          <span class="inline-block w-2 h-2 rounded-full" style="background-color: var(--theme-accent);"></span>
+          <span class="inline-block w-2.5 h-2.5 rounded-full" style="background-color: var(--theme-accent);"></span>
           <span class="text-[10px] font-bold tracking-widest uppercase opacity-90">Intermittent Fasting</span>
         </div>
         <h1 class="text-2xl font-serif font-bold text-white tracking-tight mt-0.5">MY 10–8 Routine</h1>
@@ -207,13 +220,13 @@
       
       <!-- Header Actions: Window Badge + Theme Selector Toggle -->
       <div class="flex items-center gap-2">
-        <button id="btnOpenThemeModal" class="touch-scale bg-white/10 hover:bg-white/20 backdrop-blur-md p-2 rounded-full border border-white/20 text-white shadow-sm flex items-center justify-center" title="Change Theme">
+        <button id="btnOpenThemeModal" class="touch-scale bg-white/10 hover:bg-white/20 backdrop-blur-md p-2.5 rounded-full border border-white/20 text-white shadow-sm flex items-center justify-center" title="Change Theme">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
         </button>
 
         <div class="hidden sm:flex bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/15 text-xs font-semibold tracking-wide items-center gap-2 shadow-inner">
-          <span class="text-emerald-400 font-extrabold">🌿</span>
-          <span class="text-emerald-100 font-medium">10 am <span class="opacity-60">→</span> 8 pm</span>
+          <span class="font-extrabold" style="color: var(--theme-accent);">🌿</span>
+          <span class="text-white font-medium">10 am <span class="opacity-60">→</span> 8 pm</span>
         </div>
       </div>
     </div>
@@ -226,15 +239,15 @@
     <section id="routine" class="tab-content space-y-4">
       
       <!-- Live Fasting Radial Ring Hero Widget -->
-      <div id="fastingHeroCard" class="ios-card p-5 text-white relative overflow-hidden transition-colors duration-500" style="background: linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-primary-mid) 100%);">
-        <div class="absolute -right-12 -bottom-12 w-48 h-48 rounded-full blur-3xl pointer-events-none" style="background-color: var(--theme-accent); opacity: 0.2;"></div>
+      <div id="fastingHeroCard" class="ios-card p-5 text-white relative overflow-hidden transition-colors duration-500" style="background: linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-primary-mid) 100%); border-color: var(--theme-border);">
+        <div class="absolute -right-12 -bottom-12 w-48 h-48 rounded-full blur-3xl pointer-events-none" style="background-color: var(--theme-accent); opacity: 0.25;"></div>
 
         <div class="flex items-center justify-between mb-4 border-b border-white/10 pb-3">
           <div class="flex items-center gap-2">
-            <span id="fastingBadgeDot" class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-            <span id="fastingBadgeText" class="text-xs font-bold uppercase tracking-wider text-emerald-300">Eating Window Active</span>
+            <span id="fastingBadgeDot" class="w-2.5 h-2.5 rounded-full" style="background-color: var(--theme-accent);"></span>
+            <span id="fastingBadgeText" class="text-xs font-bold uppercase tracking-wider" style="color: var(--theme-accent);">Eating Window Active</span>
           </div>
-          <span id="liveClock" class="text-xs font-mono font-medium text-white/90 bg-white/10 px-2.5 py-1 rounded-full">00:00:00</span>
+          <span id="liveClock" class="text-xs font-mono font-medium text-white/90 bg-white/10 px-2.5 py-1 rounded-full border border-white/10">00:00:00</span>
         </div>
 
         <div class="flex flex-col sm:flex-row items-center justify-between gap-6 py-1">
@@ -274,11 +287,11 @@
       <!-- Today's Meal Plan Card -->
       <div class="ios-card p-5 space-y-3">
         <div class="flex items-center justify-between border-b border-brand-border/60 pb-2.5">
-          <h3 class="text-base font-serif font-bold text-brand-deep flex items-center gap-2">
+          <h3 class="text-base font-serif font-bold text-brand-textMain flex items-center gap-2">
             <span>📅</span>
             <span>Today's Meal Schedule</span>
           </h3>
-          <span class="text-xs text-brand-accent font-semibold">10:00 AM – 8:00 PM</span>
+          <span class="text-xs font-semibold" style="color: var(--theme-accent);">10:00 AM – 8:00 PM</span>
         </div>
 
         <div id="todayMealsGrid" class="grid grid-cols-2 gap-2.5 pt-1">
@@ -288,8 +301,8 @@
 
       <!-- Mindset Rule Banner -->
       <div class="ios-card p-4 border-l-4" style="border-left-color: var(--theme-accent); background-color: var(--theme-card-subtle);">
-        <h3 class="text-sm font-bold text-brand-deep flex items-center gap-1.5 mb-1">
-          <span>♥</span>
+        <h3 class="text-sm font-bold text-brand-textMain flex items-center gap-1.5 mb-1">
+          <span style="color: var(--theme-accent);">♥</span>
           <span>Flexible, Not Fragile</span>
         </h3>
         <p class="text-xs text-brand-textMuted leading-relaxed">
@@ -299,22 +312,22 @@
 
       <!-- Portion Guide & Guidelines Accordion Card -->
       <div class="ios-card p-5 space-y-3">
-        <h3 class="text-sm font-bold text-brand-deep uppercase tracking-wider text-[11px]">Daily Guidelines & Portions</h3>
+        <h3 class="text-sm font-bold text-brand-textMain uppercase tracking-wider text-[11px]">Daily Guidelines & Portions</h3>
         <div class="grid grid-cols-2 gap-2 text-xs">
-          <div class="bg-brand-bg/60 p-2.5 rounded-xl border border-brand-border/50">
-            <span class="font-bold text-brand-accent block">Protein</span>
+          <div class="p-2.5 rounded-xl border border-brand-border/60" style="background-color: var(--theme-card-subtle);">
+            <span class="font-bold block" style="color: var(--theme-accent);">Protein</span>
             <span class="text-brand-textMuted text-[11px]">1–2 palms</span>
           </div>
-          <div class="bg-brand-bg/60 p-2.5 rounded-xl border border-brand-border/50">
-            <span class="font-bold text-brand-accent block">Carbs</span>
+          <div class="p-2.5 rounded-xl border border-brand-border/60" style="background-color: var(--theme-card-subtle);">
+            <span class="font-bold block" style="color: var(--theme-accent);">Carbs</span>
             <span class="text-brand-textMuted text-[11px]">About 1 fist</span>
           </div>
-          <div class="bg-brand-bg/60 p-2.5 rounded-xl border border-brand-border/50">
-            <span class="font-bold text-brand-accent block">Vegetables</span>
+          <div class="p-2.5 rounded-xl border border-brand-border/60" style="background-color: var(--theme-card-subtle);">
+            <span class="font-bold block" style="color: var(--theme-accent);">Vegetables</span>
             <span class="text-brand-textMuted text-[11px]">1–2+ fists</span>
           </div>
-          <div class="bg-brand-bg/60 p-2.5 rounded-xl border border-brand-border/50">
-            <span class="font-bold text-brand-accent block">Evening Treat</span>
+          <div class="p-2.5 rounded-xl border border-brand-border/60" style="background-color: var(--theme-card-subtle);">
+            <span class="font-bold block" style="color: var(--theme-accent);">Evening Treat</span>
             <span class="text-brand-textMuted text-[11px]">~150–250 kcal</span>
           </div>
         </div>
@@ -338,12 +351,12 @@
       <!-- View Toggle & Quick Actions Header -->
       <div class="flex items-center justify-between px-1">
         <div>
-          <h2 class="text-xl font-serif font-bold text-brand-deep">Weekly Planner</h2>
+          <h2 class="text-xl font-serif font-bold text-brand-textMain">Weekly Planner</h2>
           <p id="progressText" class="text-xs text-brand-textMuted">0 of 7 dinners completed</p>
         </div>
         <div class="flex items-center gap-1.5">
-          <div class="bg-brand-bg p-1 rounded-xl border border-brand-border flex text-xs font-semibold">
-            <button id="modeSingle" class="px-3 py-1 rounded-lg font-bold transition-all bg-white text-brand-deep shadow-sm">Day</button>
+          <div class="bg-brand-card p-1 rounded-xl border border-brand-border flex text-xs font-semibold">
+            <button id="modeSingle" class="px-3 py-1 rounded-lg font-bold transition-all text-white shadow-sm" style="background-color: var(--theme-primary-mid);">Day</button>
             <button id="modeAll" class="px-3 py-1 rounded-lg font-bold text-brand-textMuted transition-all">All</button>
           </div>
         </div>
@@ -355,7 +368,7 @@
       </div>
 
       <div class="flex gap-2 pt-2">
-        <button id="btnReset" class="touch-scale flex-1 py-3 bg-brand-bg border border-brand-border text-brand-deep font-bold text-xs rounded-xl shadow-sm">
+        <button id="btnReset" class="touch-scale flex-1 py-3 bg-brand-card border border-brand-border text-brand-textMain font-bold text-xs rounded-xl shadow-sm">
           ↻ Reset Week
         </button>
         <button id="btnSave" class="touch-scale flex-1 py-3 text-white font-bold text-xs rounded-xl shadow-sm" style="background-color: var(--theme-accent);">
@@ -369,11 +382,11 @@
       
       <div class="flex items-center justify-between px-1">
         <div>
-          <h2 class="text-xl font-serif font-bold text-brand-deep">Shopping List</h2>
+          <h2 class="text-xl font-serif font-bold text-brand-textMain">Shopping List</h2>
           <p class="text-xs text-brand-textMuted">Auto-built from planned meals</p>
         </div>
         <div class="flex gap-1.5">
-          <button id="btnClearChecked" class="touch-scale px-3 py-1.5 bg-brand-bg border border-brand-border text-brand-deep text-xs font-bold rounded-xl">
+          <button id="btnClearChecked" class="touch-scale px-3 py-1.5 bg-brand-card border border-brand-border text-brand-textMain text-xs font-bold rounded-xl">
             Clear Done
           </button>
           <button id="btnCopyList" class="touch-scale px-3.5 py-1.5 text-white text-xs font-bold rounded-xl shadow-sm" style="background-color: var(--theme-accent);">
@@ -400,7 +413,7 @@
 
   <!-- BOTTOM IOS TAB BAR -->
   <nav class="bottom-bar fixed bottom-0 inset-x-0 z-40 border-t flex justify-around items-center pt-2.5 pb-2 transition-colors duration-300">
-    <button data-tab="routine" class="tab-btn active touch-scale flex flex-col items-center gap-1 text-brand-accent">
+    <button data-tab="routine" class="tab-btn active touch-scale flex flex-col items-center gap-1" style="color: var(--theme-accent);">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
       <span class="text-[10px] font-bold tracking-tight">Routine</span>
     </button>
@@ -417,17 +430,17 @@
   </nav>
 
   <!-- iOS Custom Meal Modal -->
-  <div id="modalOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-200">
+  <div id="modalOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-200">
     <div class="ios-card max-w-sm w-full p-5 space-y-4 shadow-2xl scale-95 transition-transform duration-200">
-      <h3 id="modalTitle" class="text-base font-serif font-bold text-brand-deep border-b border-brand-border/60 pb-2">Add Custom Meal</h3>
+      <h3 id="modalTitle" class="text-base font-serif font-bold text-brand-textMain border-b border-brand-border/60 pb-2">Add Custom Meal</h3>
       <div class="space-y-3">
         <div>
-          <label class="text-[10px] font-bold text-brand-accent uppercase">Meal Name</label>
-          <input id="modalMealName" type="text" placeholder="e.g. Scrambled eggs on toast" class="w-full mt-1 bg-brand-bg border border-brand-border rounded-xl px-3 py-2 text-xs text-brand-textMain focus:outline-none">
+          <label class="text-[10px] font-bold uppercase tracking-wider block mb-1" style="color: var(--theme-accent);">Meal Name</label>
+          <input id="modalMealName" type="text" placeholder="e.g. Scrambled eggs on toast" class="w-full bg-brand-bg border border-brand-border rounded-xl px-3 py-2 text-xs text-brand-textMain focus:outline-none">
         </div>
         <div>
-          <label class="text-[10px] font-bold text-brand-accent uppercase">Portion Guidance (Optional)</label>
-          <input id="modalPortion" type="text" placeholder="e.g. 2 eggs, 1 slice sourdough" class="w-full mt-1 bg-brand-bg border border-brand-border rounded-xl px-3 py-2 text-xs text-brand-textMain focus:outline-none">
+          <label class="text-[10px] font-bold uppercase tracking-wider block mb-1" style="color: var(--theme-accent);">Portion Guidance (Optional)</label>
+          <input id="modalPortion" type="text" placeholder="e.g. 2 eggs, 1 slice sourdough" class="w-full bg-brand-bg border border-brand-border rounded-xl px-3 py-2 text-xs text-brand-textMain focus:outline-none">
         </div>
       </div>
       <div class="flex gap-2 pt-2">
@@ -437,11 +450,24 @@
     </div>
   </div>
 
+  <!-- Manage Saved Custom Meals Modal -->
+  <div id="manageCustomModalOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-200">
+    <div class="ios-card max-w-sm w-full p-5 space-y-4 shadow-2xl scale-95 transition-transform duration-200">
+      <div class="flex items-center justify-between border-b border-brand-border/60 pb-3">
+        <h3 id="manageCustomTitle" class="text-base font-serif font-bold text-brand-textMain">Manage Custom Meals</h3>
+        <button id="manageCustomClose" class="text-brand-textMuted font-bold text-lg px-2">✕</button>
+      </div>
+      <div id="manageCustomItemsList" class="space-y-2 max-h-[50vh] overflow-y-auto no-scrollbar py-1">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
   <!-- Theme Selector Modal -->
   <div id="themeModalOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-200">
     <div class="ios-card max-w-sm w-full p-5 space-y-4 shadow-2xl scale-95 transition-transform duration-200">
       <div class="flex items-center justify-between border-b border-brand-border/60 pb-3">
-        <h3 class="text-lg font-serif font-bold text-brand-deep">Select Theme Palette</h3>
+        <h3 class="text-lg font-serif font-bold text-brand-textMain">Select Theme Palette</h3>
         <button id="themeModalClose" class="text-brand-textMuted font-bold text-lg px-2">✕</button>
       </div>
       
@@ -452,8 +478,8 @@
   </div>
 
   <!-- Toast Notification -->
-  <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-brand-deep text-white px-4 py-2.5 rounded-full shadow-lg text-xs font-bold flex items-center gap-2 opacity-0 pointer-events-none transition-opacity duration-200 border border-white/10">
-    <span id="toastIcon" class="text-emerald-400">✓</span>
+  <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-brand-primary border border-white/20 text-white px-4 py-2.5 rounded-full shadow-lg text-xs font-bold flex items-center gap-2 opacity-0 pointer-events-none transition-opacity duration-200">
+    <span id="toastIcon" style="color: var(--theme-accent);">✓</span>
     <span id="toastMessage">Saved!</span>
   </div>
 
@@ -461,8 +487,8 @@
   <script>
     const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const THEMES = [
+      { id: 'midnight', name: 'Midnight & Neon Mint', desc: 'Sleek dark mode with mint highlights (Default)', bg: '#0f172a', accent: '#10b981' },
       { id: 'forest', name: 'Forest & Terracotta', desc: 'Classic earthy sage & rust', bg: '#173f32', accent: '#c8612c' },
-      { id: 'midnight', name: 'Midnight & Neon Mint', desc: 'Sleek dark mode with mint highlights', bg: '#0f172a', accent: '#10b981' },
       { id: 'nordic', name: 'Nordic Sage & Warm Oat', desc: 'Clean, soft muted natural tones', bg: '#2e4036', accent: '#d97757' },
       { id: 'ocean', name: 'Ocean & Amber', desc: 'Deep navy header with amber accents', bg: '#0f2a4a', accent: '#f59e0b' },
       { id: 'slate', name: 'Minimal Slate & Indigo', desc: 'Modern slate with indigo pops', bg: '#1e293b', accent: '#6366f1' }
@@ -549,7 +575,7 @@
     };
 
     // App State
-    let currentTheme = getItem('my108-theme', 'forest');
+    let currentTheme = getItem('my108-theme', 'midnight');
     let plan = getItem('my108-plan', clone(SUGGESTED_PLAN));
     let custom = getItem('my108-custom', { breakfast: {}, lunch: {}, dinner: {}, snack: {} });
     let made = getItem('my108-made', {});
@@ -568,13 +594,7 @@
     function applyTheme(themeId) {
       currentTheme = themeId;
       localStorage.setItem('my108-theme', JSON.stringify(themeId));
-
-      if (themeId === 'forest') {
-        document.documentElement.removeAttribute('data-theme');
-      } else {
-        document.documentElement.setAttribute('data-theme', themeId);
-      }
-
+      document.documentElement.setAttribute('data-theme', themeId);
       renderThemeOptions();
       updateFastingStatus();
     }
@@ -596,7 +616,7 @@
                 <div class="text-[10px] text-brand-textMuted">${t.desc}</div>
               </div>
             </div>
-            ${isActive ? '<span class="text-brand-accent font-bold text-sm">✓</span>' : ''}
+            ${isActive ? '<span class="font-bold text-sm" style="color: var(--theme-accent);">✓</span>' : ''}
           </button>
         `;
       }).join('');
@@ -649,6 +669,57 @@
       return ['Custom meal', []];
     }
 
+    function deleteCustomMeal(type, mealName) {
+      if (confirm(`Delete custom meal "${mealName}"?`)) {
+        delete custom[type][mealName];
+        DAYS.forEach(d => {
+          if (plan[d][type] === mealName) {
+            plan[d][type] = Object.keys(DB[type])[0];
+          }
+        });
+        persist();
+        renderAll();
+        showToast(`Deleted "${mealName}"`);
+      }
+    }
+
+    function openManageCustomModal(type) {
+      const overlay = document.getElementById('manageCustomModalOverlay');
+      const container = document.getElementById('manageCustomItemsList');
+      const title = document.getElementById('manageCustomTitle');
+      title.textContent = `Custom ${type.toUpperCase()} Meals`;
+
+      const items = Object.keys(custom[type]);
+      if (items.length === 0) {
+        container.innerHTML = `<p class="text-xs text-brand-textMuted py-3 text-center">No custom ${type} meals saved.</p>`;
+      } else {
+        container.innerHTML = items.map(name => `
+          <div class="flex items-center justify-between p-2.5 rounded-xl border border-brand-border bg-brand-bg text-xs">
+            <span class="font-semibold text-brand-textMain">${name}</span>
+            <button data-del-custom="${name}" data-type="${type}" class="touch-scale text-red-400 hover:text-red-500 font-bold px-2 py-1 bg-red-500/10 rounded-lg">Delete</button>
+          </div>
+        `).join('');
+
+        container.querySelectorAll('[data-del-custom]').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const name = e.currentTarget.dataset.delCustom;
+            const t = e.currentTarget.dataset.type;
+            deleteCustomMeal(t, name);
+            openManageCustomModal(t);
+          });
+        });
+      }
+
+      overlay.classList.remove('opacity-0', 'pointer-events-none');
+      overlay.classList.add('opacity-100');
+    }
+
+    function closeManageCustomModal() {
+      const overlay = document.getElementById('manageCustomModalOverlay');
+      overlay.classList.remove('opacity-100');
+      overlay.classList.add('opacity-0', 'pointer-events-none');
+    }
+
     // Dynamic Fasting Timer & Radial SVG Circle Updater
     function updateFastingStatus() {
       const now = new Date();
@@ -675,7 +746,7 @@
       const ringPercentText = document.getElementById('ringPercentText');
       const ringSubLabel = document.getElementById('ringSubLabel');
 
-      const circleLength = 314.159; // 2 * PI * r (r=50)
+      const circleLength = 314.159;
 
       if (isEatingWindow) {
         const elapsedMins = totalMins - windowStart;
@@ -689,9 +760,9 @@
         ringPercentText.textContent = `${Math.round(percent)}%`;
         ringSubLabel.textContent = 'Eating Window';
 
-        badgeDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400';
+        badgeDot.style.backgroundColor = 'var(--theme-accent)';
         badgeText.textContent = 'Eating Window Active';
-        badgeText.className = 'text-xs font-bold uppercase tracking-wider text-emerald-300';
+        badgeText.style.color = 'var(--theme-accent)';
         timerLabel.textContent = 'Window Closes In';
 
         const diffMins = windowEnd - totalMins;
@@ -716,9 +787,9 @@
         ringPercentText.textContent = `${Math.round(percent)}%`;
         ringSubLabel.textContent = 'Fasting Progress';
 
-        badgeDot.className = 'w-2.5 h-2.5 rounded-full bg-amber-400';
+        badgeDot.style.backgroundColor = '#38bdf8';
         badgeText.textContent = 'Fasting Period Active';
-        badgeText.className = 'text-xs font-bold uppercase tracking-wider text-amber-300';
+        badgeText.style.color = '#38bdf8';
         timerLabel.textContent = 'Window Opens In';
 
         let diffMins = 0;
@@ -773,13 +844,13 @@
       };
 
       grid.innerHTML = Object.entries(todayPlan).map(([type, mealName]) => `
-        <div class="bg-brand-bg/80 border border-brand-border/60 p-3 rounded-xl flex flex-col justify-between">
+        <div class="p-3 rounded-xl flex flex-col justify-between border border-brand-border/60" style="background-color: var(--theme-card-subtle);">
           <div>
-            <div class="text-[10px] font-extrabold text-brand-accent uppercase tracking-wider flex items-center gap-1">
+            <div class="text-[10px] font-extrabold uppercase tracking-wider flex items-center gap-1" style="color: var(--theme-accent);">
               <span>${mealMeta[type].icon}</span>
               <span>${mealMeta[type].label}</span>
             </div>
-            <div class="text-xs font-bold text-brand-deep mt-1 leading-snug">${mealName}</div>
+            <div class="text-xs font-bold text-brand-textMain mt-1 leading-snug">${mealName}</div>
           </div>
           <div class="text-[10px] text-brand-textMuted mt-1.5 truncate">${getMealInfo(type, mealName)[0]}</div>
         </div>
@@ -790,8 +861,8 @@
     function renderRules() {
       const container = document.getElementById('rulesList');
       container.innerHTML = RULES.map(rule => `
-        <div class="flex items-start gap-2 bg-brand-bg/50 p-2.5 rounded-xl border border-brand-border/40 text-xs text-brand-textMain">
-          <span class="text-brand-accent font-bold">✓</span>
+        <div class="flex items-start gap-2 p-2.5 rounded-xl border border-brand-border/50 text-xs text-brand-textMain" style="background-color: var(--theme-card-subtle);">
+          <span class="font-bold" style="color: var(--theme-accent);">✓</span>
           <span class="leading-tight">${rule}</span>
         </div>
       `).join('');
@@ -807,8 +878,8 @@
         const isSelected = day === selectedDay;
         const isCompleted = !!made[day];
         return `
-          <button data-day="${day}" class="btn-day-pill touch-scale flex-1 min-w-[62px] py-2 px-1 rounded-xl text-center flex flex-col items-center justify-center transition-all ${isSelected ? 'bg-brand-deep text-white shadow-md' : 'bg-white border border-brand-border text-brand-textMain'}">
-            <span class="text-[10px] font-bold uppercase tracking-tight opacity-80">${day.substring(0, 3)}</span>
+          <button data-day="${day}" class="btn-day-pill touch-scale flex-1 min-w-[62px] py-2 px-1 rounded-xl text-center flex flex-col items-center justify-center transition-all ${isSelected ? 'text-white shadow-md' : 'border border-brand-border text-brand-textMain'}" style="${isSelected ? 'background-color: var(--theme-accent);' : 'background-color: var(--theme-card);'}">
+            <span class="text-[10px] font-bold uppercase tracking-tight opacity-90">${day.substring(0, 3)}</span>
             <span class="text-xs font-extrabold">${isCompleted ? '✓' : '•'}</span>
           </button>
         `;
@@ -831,39 +902,46 @@
         const isEnjoymentDay = day === 'Friday' || day === 'Saturday';
 
         dayCard.innerHTML = `
-          <div class="bg-brand-deep text-white px-4 py-3 flex items-center justify-between">
-            <h3 class="text-base font-serif font-bold">${day}</h3>
-            ${isEnjoymentDay ? '<span class="text-[10px] bg-brand-accent text-white px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">Enjoyment-friendly</span>' : ''}
+          <div class="text-white px-4 py-3 flex items-center justify-between border-b border-brand-border/60" style="background-color: var(--theme-primary-mid);">
+            <h3 class="text-base font-serif font-bold text-white">${day}</h3>
+            ${isEnjoymentDay ? '<span class="text-[10px] text-white px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider" style="background-color: var(--theme-accent);">Enjoyment-friendly</span>' : ''}
           </div>
-          <div class="p-4 space-y-3.5">
+          <div class="p-4 space-y-3.5" style="background-color: var(--theme-card);">
             ${['breakfast', 'lunch', 'dinner', 'snack'].map(type => {
               const selectedMeal = plan[day][type];
               const availableNames = [...Object.keys(DB[type]), ...Object.keys(custom[type])];
               const info = getMealInfo(type, selectedMeal);
+              const isCustom = Boolean(custom[type][selectedMeal]);
               const isLeftoverSuggestion = type === 'dinner' && info[2];
 
               return `
-                <div class="meal-slot border-b border-brand-border/40 pb-3 last:border-0 last:pb-0">
+                <div class="meal-slot border-b border-brand-border/50 pb-3 last:border-0 last:pb-0">
                   <div class="flex justify-between items-center mb-1">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-brand-accent">
+                    <label class="text-[10px] font-bold uppercase tracking-wider" style="color: var(--theme-accent);">
                       ${type === 'snack' ? '7:30 PM Snack' : type}
                     </label>
+                    ${Object.keys(custom[type]).length > 0 ? `<button data-manage-type="${type}" class="btn-manage-custom text-[10px] text-brand-textMuted underline hover:text-brand-textMain">Manage Custom</button>` : ''}
                   </div>
-                  <div class="flex gap-1.5">
-                    <select data-day="${day}" data-type="${type}" class="meal-select flex-1 bg-brand-bg border border-brand-border rounded-xl px-3 text-xs text-brand-textMain font-medium focus:outline-none focus:ring-2 focus:ring-brand-accent/50">
+                  <div class="flex gap-1.5 items-center">
+                    <select data-day="${day}" data-type="${type}" class="meal-select flex-1 rounded-xl px-3 text-xs text-brand-textMain font-medium focus:outline-none focus:ring-2 focus:ring-brand-accent/50 border border-brand-border">
                       ${availableNames.map(name => `<option value="${name}" ${name === selectedMeal ? 'selected' : ''}>${name}</option>`).join('')}
                     </select>
-                    <button data-day="${day}" data-type="${type}" class="btn-add-custom touch-scale px-3 bg-brand-bg border border-brand-border rounded-xl text-brand-deep font-bold text-sm">
+                    <button data-day="${day}" data-type="${type}" class="btn-add-custom touch-scale px-3 py-2 rounded-xl text-brand-textMain font-bold text-sm border border-brand-border" style="background-color: var(--theme-card-subtle);">
                       ＋
                     </button>
+                    ${isCustom ? `
+                      <button data-del-custom-slot="${selectedMeal}" data-type="${type}" class="btn-del-slot touch-scale px-2.5 py-2 rounded-xl font-bold text-xs text-red-400 bg-red-500/10 border border-red-500/20" title="Delete custom meal">
+                        ✕
+                      </button>
+                    ` : ''}
                   </div>
                   <div class="text-[11px] text-brand-textMuted mt-1 leading-normal px-0.5">${info[0]}</div>
-                  ${isLeftoverSuggestion ? `<div class="mt-1 text-[11px] text-brand-accent bg-brand-accentLight px-2.5 py-1 rounded-lg border border-brand-accent/20">↪ Automatically makes enough for tomorrow's lunch</div>` : ''}
+                  ${isLeftoverSuggestion ? `<div class="mt-1 text-[11px] px-2.5 py-1 rounded-lg border border-brand-border" style="background-color: var(--theme-card-subtle); color: var(--theme-accent);">↪ Automatically makes enough for tomorrow's lunch</div>` : ''}
                 </div>
               `;
             }).join('')}
 
-            <button data-day="${day}" class="btn-made-toggle touch-scale w-full mt-2 py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 ${made[day] ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-brand-bg text-brand-deep border border-brand-border'}">
+            <button data-day="${day}" class="btn-made-toggle touch-scale w-full mt-2 py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 border border-brand-border" style="${made[day] ? 'background-color: var(--theme-accent-light); color: var(--theme-accent);' : 'background-color: var(--theme-card-subtle); color: var(--theme-text-main);'}">
               <span>${made[day] ? '✓ Made as planned' : 'Tonight: Made it?'}</span>
             </button>
           </div>
@@ -906,6 +984,21 @@
           pendingModalDay = e.currentTarget.dataset.day;
           pendingModalSlot = e.currentTarget.dataset.type;
           openModal(`Custom ${pendingModalSlot.toUpperCase()}`);
+        });
+      });
+
+      document.querySelectorAll('.btn-del-slot').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const name = e.currentTarget.dataset.delCustomSlot;
+          const type = e.currentTarget.dataset.type;
+          deleteCustomMeal(type, name);
+        });
+      });
+
+      document.querySelectorAll('.btn-manage-custom').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const type = e.currentTarget.dataset.manageType;
+          openManageCustomModal(type);
         });
       });
 
@@ -958,7 +1051,7 @@
         catCard.className = 'ios-card p-4 space-y-2';
 
         catCard.innerHTML = `
-          <h3 class="text-xs font-bold text-brand-accent uppercase tracking-wider font-serif mb-2 border-b border-brand-border/40 pb-1.5 flex justify-between items-center">
+          <h3 class="text-xs font-bold uppercase tracking-wider font-serif mb-2 border-b border-brand-border/40 pb-1.5 flex justify-between items-center" style="color: var(--theme-accent);">
             <span>${category}</span>
             <span class="text-[10px] text-brand-textMuted font-sans font-normal">${totalItems.length} items</span>
           </h3>
@@ -970,10 +1063,10 @@
               return `
                 <label class="flex items-center justify-between p-2 rounded-xl hover:bg-brand-bg transition-colors cursor-pointer text-xs ${isChecked ? 'line-through text-brand-textMuted opacity-60' : 'text-brand-textMain'}">
                   <div class="flex items-center gap-2.5 flex-1">
-                    <input type="checkbox" data-item="${item}" class="chk-item w-4 h-4 rounded accent-brand-accent border-brand-border" ${isChecked ? 'checked' : ''}>
+                    <input type="checkbox" data-item="${item}" class="chk-item w-4 h-4 rounded border-brand-border" style="accent-color: var(--theme-accent);" ${isChecked ? 'checked' : ''}>
                     <span class="font-medium">${item}</span>
                   </div>
-                  ${isManual ? `<button data-item="${item}" class="btn-del-manual text-red-400 font-bold px-2 py-0.5 rounded text-xs active:bg-red-50">✕</button>` : ''}
+                  ${isManual ? `<button data-item="${item}" class="btn-del-manual text-red-400 font-bold px-2 py-0.5 rounded text-xs active:bg-red-500/10">✕</button>` : ''}
                 </label>
               `;
             }).join('')}
@@ -1033,9 +1126,11 @@
 
           buttons.forEach(b => {
             if (b.dataset.tab === tabName) {
-              b.className = 'tab-btn touch-scale flex flex-col items-center gap-1 text-brand-accent';
+              b.className = 'tab-btn touch-scale flex flex-col items-center gap-1';
+              b.style.color = 'var(--theme-accent)';
             } else {
               b.className = 'tab-btn touch-scale flex flex-col items-center gap-1 text-brand-textMuted';
+              b.style.color = '';
             }
           });
 
@@ -1061,18 +1156,23 @@
 
       document.getElementById('btnOpenThemeModal').addEventListener('click', openThemeModal);
       document.getElementById('themeModalClose').addEventListener('click', closeThemeModal);
+      document.getElementById('manageCustomClose').addEventListener('click', closeManageCustomModal);
 
       document.getElementById('modeSingle').addEventListener('click', () => {
         isAllDaysMode = false;
-        document.getElementById('modeSingle').className = 'px-3 py-1 rounded-lg font-bold transition-all bg-white text-brand-deep shadow-sm';
+        document.getElementById('modeSingle').className = 'px-3 py-1 rounded-lg font-bold transition-all text-white shadow-sm';
+        document.getElementById('modeSingle').style.backgroundColor = 'var(--theme-primary-mid)';
         document.getElementById('modeAll').className = 'px-3 py-1 rounded-lg font-bold text-brand-textMuted transition-all';
+        document.getElementById('modeAll').style.backgroundColor = 'transparent';
         renderPlanner();
       });
 
       document.getElementById('modeAll').addEventListener('click', () => {
         isAllDaysMode = true;
-        document.getElementById('modeAll').className = 'px-3 py-1 rounded-lg font-bold transition-all bg-white text-brand-deep shadow-sm';
+        document.getElementById('modeAll').className = 'px-3 py-1 rounded-lg font-bold transition-all text-white shadow-sm';
+        document.getElementById('modeAll').style.backgroundColor = 'var(--theme-primary-mid)';
         document.getElementById('modeSingle').className = 'px-3 py-1 rounded-lg font-bold text-brand-textMuted transition-all';
+        document.getElementById('modeSingle').style.backgroundColor = 'transparent';
         renderPlanner();
       });
 

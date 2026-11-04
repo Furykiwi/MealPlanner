@@ -2,546 +2,1155 @@
 <html lang="en-NZ">
 <head>
 <meta charset="UTF-8">
+<!-- Native iOS Viewports & Web App Meta -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MY 10–8">
+<meta name="theme-color" content="#173f32">
+
+<!-- Inline SVG Favicon / Apple Touch Icon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23173f32'/><circle cx='50' cy='50' r='32' fill='none' stroke='%23c8612c' stroke-width='8'/><path d='M50 26v24l16 10' stroke='%23ffffff' stroke-width='6' stroke-linecap='round'/></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23173f32'/><circle cx='50' cy='50' r='32' fill='none' stroke='%23c8612c' stroke-width='8'/><path d='M50 26v24l16 10' stroke='%23ffffff' stroke-width='6' stroke-linecap='round'/></svg>">
+
 <title>MY 10–8 | Intermittent Fasting & Meal Planner</title>
+
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            deep: 'var(--theme-primary)',
+            mid: 'var(--theme-primary-mid)',
+            accent: 'var(--theme-accent)',
+            accentLight: 'var(--theme-accent-light)',
+            bg: 'var(--theme-bg)',
+            card: 'var(--theme-card)',
+            textMain: 'var(--theme-text-main)',
+            textMuted: 'var(--theme-text-muted)',
+            border: 'var(--theme-border)'
+          }
+        },
+        fontFamily: {
+          sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'SF Pro Text', 'Segoe UI', 'Roboto', 'sans-serif'],
+          serif: ['New York', 'Georgia', 'Cambria', 'serif']
+        }
+      }
+    }
+  }
+</script>
+
 <style>
-:root{--bg-page:#f4efe6;--bg-card:#ffffff;--bg-subt:#f9f6f0;--text-main:#1e2925;--text-muted:#6b7c75;--brand-dark:#173f32;--brand-accent:#c8612c;--brand-light:#e5ede8;--border-subtle:#e3ded5;--ring-bg:#dcd5c9;--badge-bg:#f5e2d6;--badge-text:#9e4316;--shadow-sm:0 4px 14px rgba(0,0,0,0.04);--shadow-md:0 8px 24px rgba(0,0,0,0.07)}
-[data-theme="midnight"]{--bg-page:#0f1715;--bg-card:#182420;--bg-subt:#21302b;--text-main:#ecf2ef;--text-muted:#8a9e96;--brand-dark:#0a1210;--brand-accent:#10b981;--brand-light:#1d382e;--border-subtle:#263832;--ring-bg:#263832;--badge-bg:#153e31;--badge-text:#34d399;--shadow-sm:0 4px 14px rgba(0,0,0,0.3)}
-[data-theme="nordic"]{--bg-page:#edebe6;--bg-card:#ffffff;--bg-subt:#f5f4f0;--text-main:#2b302d;--text-muted:#78807b;--brand-dark:#34403a;--brand-accent:#7a8b7b;--brand-light:#e2e8e3;--border-subtle:#dcdad4;--ring-bg:#d0ceb7;--badge-bg:#e2e8e3;--badge-text:#34403a}
-[data-theme="ocean"]{--bg-page:#eef4f8;--bg-card:#ffffff;--bg-subt:#f4f8fb;--text-main:#172533;--text-muted:#65778a;--brand-dark:#0f2942;--brand-accent:#d97706;--brand-light:#e0f2fe;--border-subtle:#d6e2ed;--ring-bg:#cbd5e1;--badge-bg:#fef3c7;--badge-text:#b45309}
-[data-theme="slate"]{--bg-page:#f1f3f5;--bg-card:#ffffff;--bg-subt:#f8f9fa;--text-main:#191c1f;--text-muted:#6c757d;--brand-dark:#212529;--brand-accent:#4f46e5;--brand-light:#e0e7ff;--border-subtle:#e9ecef;--ring-bg:#dee2e6;--badge-bg:#e0e7ff;--badge-text:#3730a3}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;padding:0;background:var(--bg-page);color:var(--text-main);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Roboto,Helvetica,sans-serif;padding-top:env(safe-area-inset-top);padding-bottom:calc(75px + env(safe-area-inset-bottom));transition:background .3s,color .3s;user-select:none}
-header{background:var(--brand-dark);color:#fff;padding:calc(12px + env(safe-area-inset-top)) 20px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom-left-radius:24px;border-bottom-right-radius:24px;box-shadow:var(--shadow-md)}
-.brand h1{font-size:22px;font-weight:800;margin:0;letter-spacing:-0.5px}
-.brand p{margin:2px 0 0;font-size:12px;opacity:0.85;font-weight:400}
-.theme-selector{background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:8px 12px;border-radius:20px;font-size:12px;font-weight:600;outline:none}
-.theme-selector option{background:var(--bg-card);color:var(--text-main)}
-nav.bottom-bar{position:fixed;bottom:0;left:0;right:0;height:calc(64px + env(safe-area-inset-bottom));background:var(--bg-card);border-top:1px solid var(--border-subtle);display:flex;justify-content:space-around;align-items:flex-start;padding-top:8px;padding-bottom:env(safe-area-inset-bottom);z-index:100;box-shadow:0 -4px 20px rgba(0,0,0,0.05)}
-.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:var(--text-muted);font-size:10px;font-weight:700;cursor:pointer;flex:1}
-.nav-item svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
-.nav-item.on{color:var(--brand-accent)}
-.nav-item.on svg{transform:scale(1.1);stroke:var(--brand-accent)}
-main{max-width:680px;margin:0 auto;padding:16px}
-.tab{display:none}.tab.on{display:block}
-.card{background:var(--bg-card);border-radius:20px;padding:20px;margin-bottom:16px;border:1px solid var(--border-subtle);box-shadow:var(--shadow-sm);transition:transform .15s}
-.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.card-title{font-size:17px;font-weight:700;margin:0;color:var(--text-main);letter-spacing:-0.3px}
-.status-card{text-align:center;position:relative;overflow:hidden}
-.ring-container{position:relative;width:180px;height:180px;margin:10px auto}
-.ring-container svg{width:100%;height:100%;transform:rotate(-90deg)}
-.ring-bg{fill:none;stroke:var(--ring-bg);stroke-width:10}
-.ring-progress{fill:none;stroke:var(--brand-accent);stroke-width:10;stroke-dasharray:440;stroke-dashoffset:440;stroke-linecap:round;transition:stroke-dashoffset 0.8s ease}
-.ring-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center}
-.ring-status{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--brand-accent)}
-.ring-timer{font-size:26px;font-weight:800;color:var(--text-main);font-variant-numeric:tabular-nums;margin:3px 0}
-.ring-sub{font-size:11px;color:var(--text-muted)}
-.today-meals{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.today-meal-box{background:var(--bg-subt);padding:12px;border-radius:14px;border:1px solid var(--border-subtle)}
-.today-meal-box label{font-size:10px;font-weight:800;color:var(--brand-accent);display:block;margin-bottom:4px;text-transform:uppercase}
-.today-meal-box span{font-size:13px;font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.timeline{margin-top:10px}
-.timeline-item{display:flex;align-items:center;padding:10px 0;border-bottom:1px dashed var(--border-subtle)}
-.timeline-item:last-child{border-bottom:none}
-.timeline-time{width:90px;font-size:12px;font-weight:700;color:var(--brand-accent)}
-.timeline-desc{font-size:13px;font-weight:600;color:var(--text-main)}
-.portion-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.portion-box{background:var(--bg-subt);padding:12px;border-radius:12px;border:1px solid var(--border-subtle)}
-.portion-box b{font-size:12px;color:var(--text-main);display:block}
-.portion-box span{font-size:12px;color:var(--text-muted)}
-.day-selector-bar{display:flex;gap:6px;overflow-x:auto;padding:4px 0 14px;scrollbar-width:none}
-.day-selector-bar::-webkit-scrollbar{display:none}
-.day-chip{flex:0 0 auto;padding:10px 16px;border-radius:16px;background:var(--bg-card);border:1px solid var(--border-subtle);font-size:13px;font-weight:700;color:var(--text-muted);cursor:pointer;transition:all .2s}
-.day-chip.on{background:var(--brand-dark);color:#fff;border-color:var(--brand-dark);box-shadow:var(--shadow-sm)}
-.meal-card{background:var(--bg-card);border-radius:16px;padding:14px;margin-bottom:12px;border:1px solid var(--border-subtle)}
-.meal-label{font-size:10px;font-weight:800;color:var(--brand-accent);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
-.select-row{display:flex;gap:8px;align-items:center}
-.select-row select{flex:1;background:var(--bg-subt);border:1px solid var(--border-subtle);color:var(--text-main);padding:12px;border-radius:12px;font-size:14px;font-weight:600;outline:none;-webkit-appearance:none}
-.btn-icon{background:var(--bg-subt);border:1px solid var(--border-subtle);color:var(--text-main);width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;cursor:pointer}
-.btn-del{color:#ef4444;border-color:rgba(239,68,68,0.2);background:rgba(239,68,68,0.05)}
-.portion-desc{font-size:12px;color:var(--text-muted);margin-top:6px;font-style:italic}
-.leftover-badge{margin-top:8px;font-size:11px;font-weight:600;color:var(--badge-text);background:var(--badge-bg);padding:6px 10px;border-radius:8px;display:inline-block}
-.btn-primary{background:var(--brand-accent);color:#fff;border:none;padding:14px 20px;border-radius:14px;font-size:14px;font-weight:700;width:100%;cursor:pointer;box-shadow:var(--shadow-sm);transition:opacity .15s}
-.btn-secondary{background:var(--bg-subt);color:var(--text-main);border:1px solid var(--border-subtle);padding:14px 20px;border-radius:14px;font-size:14px;font-weight:700;width:100%;cursor:pointer}
-.btn-primary:active,.btn-secondary:active,.btn-icon:active{opacity:0.8;transform:scale(0.98)}
-.shop-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg-subt);border-radius:12px;margin-bottom:8px;border:1px solid var(--border-subtle)}
-.shop-item input[type="checkbox"]{width:20px;height:20px;accent-color:var(--brand-accent)}
-.shop-item span{flex:1;font-size:14px;font-weight:600}
-.shop-item.done span{text-decoration:line-through;opacity:0.5}
-.add-bar{display:flex;gap:8px;margin-bottom:16px}
-.add-bar input{flex:1;background:var(--bg-card);border:1px solid var(--border-subtle);padding:12px 16px;border-radius:14px;color:var(--text-main);font-size:14px;outline:none}
-.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);z-index:200;display:none;align-items:flex-end;justify-content:center}
-.modal-overlay.on{display:flex}
-.modal-sheet{background:var(--bg-card);width:100%;max-width:680px;border-top-left-radius:24px;border-top-right-radius:24px;padding:24px 20px calc(24px + env(safe-area-inset-bottom));box-shadow:var(--shadow-md);max-height:85vh;overflow-y:auto}
-.modal-sheet h3{margin:0 0 16px;font-size:18px;color:var(--text-main)}
-.modal-sheet input{width:100%;background:var(--bg-subt);border:1px solid var(--border-subtle);padding:12px;border-radius:12px;color:var(--text-main);font-size:14px;margin-bottom:12px;outline:none}
-.custom-list-item{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--bg-subt);border-radius:10px;margin-bottom:8px;border:1px solid var(--border-subtle)}
-.custom-list-item span{font-size:13px;font-weight:600}
-.toast{position:fixed;bottom:calc(80px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:var(--brand-dark);color:#fff;padding:10px 18px;border-radius:20px;font-size:12px;font-weight:700;box-shadow:var(--shadow-md);opacity:0;pointer-events:none;transition:opacity .2s;z-index:300}
-.toast.show{opacity:1}
+  /* Safe Area Variables for iPhone Notch / Dynamic Island / Bottom Home Bar */
+  :root {
+    --sat: env(safe-area-inset-top, 0px);
+    --sab: env(safe-area-inset-bottom, 0px);
+    --sal: env(safe-area-inset-left, 0px);
+    --sar: env(safe-area-inset-right, 0px);
+
+    /* THEME 1: Forest & Terracotta (Default Warm Earthy) */
+    --theme-primary: #173f32;
+    --theme-primary-mid: #235242;
+    --theme-accent: #c8612c;
+    --theme-accent-light: #fbece4;
+    --theme-bg: #f5f0e6;
+    --theme-card: #ffffff;
+    --theme-text-main: #1e2824;
+    --theme-text-muted: #68756f;
+    --theme-border: #e4decb;
+    --theme-ring-track: rgba(255, 255, 255, 0.15);
+    --theme-card-subtle: #f8f5ee;
+  }
+
+  /* THEME 2: Midnight & Neon Mint (Dark Mode) */
+  [data-theme="midnight"] {
+    --theme-primary: #0f172a;
+    --theme-primary-mid: #1e293b;
+    --theme-accent: #10b981;
+    --theme-accent-light: rgba(16, 185, 129, 0.15);
+    --theme-bg: #0b0f19;
+    --theme-card: #182232;
+    --theme-text-main: #f1f5f9;
+    --theme-text-muted: #94a3b8;
+    --theme-border: #2e3d52;
+    --theme-ring-track: rgba(255, 255, 255, 0.12);
+    --theme-card-subtle: #121a28;
+  }
+
+  /* THEME 3: Nordic Sage & Warm Oat */
+  [data-theme="nordic"] {
+    --theme-primary: #2e4036;
+    --theme-primary-mid: #3b5246;
+    --theme-accent: #d97757;
+    --theme-accent-light: #fbf0ec;
+    --theme-bg: #f4f0e8;
+    --theme-card: #ffffff;
+    --theme-text-main: #232b27;
+    --theme-text-muted: #727e77;
+    --theme-border: #ded8cb;
+    --theme-ring-track: rgba(255, 255, 255, 0.15);
+    --theme-card-subtle: #f8f6f0;
+  }
+
+  /* THEME 4: Ocean & Amber */
+  [data-theme="ocean"] {
+    --theme-primary: #0f2a4a;
+    --theme-primary-mid: #1a3c63;
+    --theme-accent: #f59e0b;
+    --theme-accent-light: #fef3c7;
+    --theme-bg: #f1f5f9;
+    --theme-card: #ffffff;
+    --theme-text-main: #0f172a;
+    --theme-text-muted: #64748b;
+    --theme-border: #cbd5e1;
+    --theme-ring-track: rgba(255, 255, 255, 0.15);
+    --theme-card-subtle: #f8fafc;
+  }
+
+  /* THEME 5: Minimal Slate & Indigo */
+  [data-theme="slate"] {
+    --theme-primary: #1e293b;
+    --theme-primary-mid: #334155;
+    --theme-accent: #6366f1;
+    --theme-accent-light: #e0e7ff;
+    --theme-bg: #f8fafc;
+    --theme-card: #ffffff;
+    --theme-text-main: #0f172a;
+    --theme-text-muted: #64748b;
+    --theme-border: #e2e8f0;
+    --theme-ring-track: rgba(255, 255, 255, 0.15);
+    --theme-card-subtle: #f1f5f9;
+  }
+
+  body {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+    background-color: var(--theme-bg);
+    color: var(--theme-text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Safe padding integration */
+  header {
+    padding-top: calc(var(--sat) + 12px);
+    padding-left: max(16px, var(--sal));
+    padding-right: max(16px, var(--sar));
+    background-color: var(--theme-primary);
+  }
+
+  nav.bottom-bar {
+    padding-bottom: max(var(--sab), 10px);
+    padding-left: max(16px, var(--sal));
+    padding-right: max(16px, var(--sar));
+    background-color: var(--theme-card);
+    border-color: var(--theme-border);
+  }
+
+  main {
+    padding-bottom: calc(var(--sab) + 95px);
+    padding-left: max(16px, var(--sal));
+    padding-right: max(16px, var(--sar));
+  }
+
+  /* Hide scrollbars */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Premium Card Aesthetics */
+  .ios-card {
+    background: var(--theme-card);
+    border: 1px solid var(--theme-border);
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+    border-radius: 22px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+
+  /* iOS Active Press Response */
+  .touch-scale {
+    transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1), opacity 0.15s ease;
+  }
+  .touch-scale:active {
+    transform: scale(0.97);
+    opacity: 0.9;
+  }
+
+  select, input, button {
+    min-height: 44px;
+    -webkit-appearance: none;
+  }
+
+  /* SVG Radial Progress Animation Transition */
+  .progress-ring-circle {
+    transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.5s ease;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+  }
 </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-between antialiased">
 
-<header>
-  <div class="brand">
-    <h1>MY 10–8</h1>
-    <p>Intermittent Fasting & Meal Planner</p>
-  </div>
-  <select class="theme-selector" id="themeSelect">
-    <option value="forest">🌿 Forest & Terracotta</option>
-    <option value="midnight">🌙 Midnight Mint</option>
-    <option value="nordic">❄️ Nordic Sage</option>
-    <option value="ocean">🌊 Ocean & Amber</option>
-    <option value="slate">🩶 Minimal Slate</option>
-  </select>
-</header>
-
-<main>
-  <!-- ROUTINE TAB -->
-  <section id="routine" class="tab on">
-    <div class="card status-card">
-      <div class="card-header" style="justify-content:center;">
-        <span id="fastBadge" class="ring-status">Fasting Window</span>
+  <!-- TOP HEADER (iOS Header with Theme Picker Button) -->
+  <header class="text-white shadow-md sticky top-0 z-30 transition-all duration-300">
+    <div class="max-w-2xl mx-auto flex items-center justify-between py-3">
+      <div>
+        <div class="flex items-center gap-1.5">
+          <span class="inline-block w-2 h-2 rounded-full" style="background-color: var(--theme-accent);"></span>
+          <span class="text-[10px] font-bold tracking-widest uppercase opacity-90">Intermittent Fasting</span>
+        </div>
+        <h1 class="text-2xl font-serif font-bold text-white tracking-tight mt-0.5">MY 10–8 Routine</h1>
       </div>
-      <div class="ring-container">
-        <svg viewBox="0 0 160 160">
-          <circle class="ring-bg" cx="80" cy="80" r="70"></circle>
-          <circle id="ringCircle" class="ring-progress" cx="80" cy="80" r="70"></circle>
-        </svg>
-        <div class="ring-text">
-          <span class="ring-status" id="ringStateText">FASTING</span>
-          <span class="ring-timer" id="ringTimer">00:00:00</span>
-          <span class="ring-sub" id="ringSubText">until 10:00 AM</span>
+      
+      <!-- Header Actions: Window Badge + Theme Selector Toggle -->
+      <div class="flex items-center gap-2">
+        <button id="btnOpenThemeModal" class="touch-scale bg-white/10 hover:bg-white/20 backdrop-blur-md p-2 rounded-full border border-white/20 text-white shadow-sm flex items-center justify-center" title="Change Theme">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
+        </button>
+
+        <div class="hidden sm:flex bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/15 text-xs font-semibold tracking-wide items-center gap-2 shadow-inner">
+          <span class="text-emerald-400 font-extrabold">🌿</span>
+          <span class="text-emerald-100 font-medium">10 am <span class="opacity-60">→</span> 8 pm</span>
         </div>
       </div>
-      <div class="today-meals" id="todayOverview"></div>
     </div>
+  </header>
 
-    <div class="card">
-      <div class="card-header">
-        <h2 class="card-title">◷ Daily Rhythm (10–8)</h2>
+  <!-- MAIN APP CONTAINER -->
+  <main class="max-w-2xl mx-auto w-full pt-4 px-4 flex-1">
+
+    <!-- ================= ROUTINE TAB ================= -->
+    <section id="routine" class="tab-content space-y-4">
+      
+      <!-- Live Fasting Radial Ring Hero Widget -->
+      <div id="fastingHeroCard" class="ios-card p-5 text-white relative overflow-hidden transition-colors duration-500" style="background: linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-primary-mid) 100%);">
+        <div class="absolute -right-12 -bottom-12 w-48 h-48 rounded-full blur-3xl pointer-events-none" style="background-color: var(--theme-accent); opacity: 0.2;"></div>
+
+        <div class="flex items-center justify-between mb-4 border-b border-white/10 pb-3">
+          <div class="flex items-center gap-2">
+            <span id="fastingBadgeDot" class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+            <span id="fastingBadgeText" class="text-xs font-bold uppercase tracking-wider text-emerald-300">Eating Window Active</span>
+          </div>
+          <span id="liveClock" class="text-xs font-mono font-medium text-white/90 bg-white/10 px-2.5 py-1 rounded-full">00:00:00</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 py-1">
+          <!-- Radial SVG Progress Ring -->
+          <div class="relative w-40 h-40 flex-shrink-0 flex items-center justify-center">
+            <svg class="w-full h-full" viewBox="0 0 120 120">
+              <!-- Background Circle -->
+              <circle cx="60" cy="60" r="50" fill="none" stroke="var(--theme-ring-track)" stroke-width="10" />
+              <!-- Progress Circle -->
+              <circle id="radialProgressCircle" class="progress-ring-circle" cx="60" cy="60" r="50" fill="none" stroke="var(--theme-accent)" stroke-width="10" stroke-linecap="round" stroke-dasharray="314.159" stroke-dashoffset="157" />
+            </svg>
+            <div class="absolute flex flex-col items-center justify-center text-center">
+              <span id="ringPercentText" class="text-2xl font-extrabold font-mono text-white tracking-tight">0%</span>
+              <span id="ringSubLabel" class="text-[10px] uppercase font-bold text-white/80 tracking-wider">Elapsed</span>
+            </div>
+          </div>
+
+          <!-- Time & Next Meal Details -->
+          <div class="flex-1 space-y-3 text-center sm:text-left w-full">
+            <div>
+              <div class="text-xs font-medium text-white/80 uppercase tracking-wider mb-0.5" id="todayDayName">Today · Loading</div>
+              <h2 class="text-xl font-serif font-bold text-white" id="fastingCountdownLabel">Window Closes In</h2>
+              <div class="text-3xl font-extrabold font-mono text-white mt-0.5 tracking-tight" id="fastingTimer">--h --m</div>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/10 flex items-center justify-between text-xs">
+              <div>
+                <div class="text-[10px] text-white/80 font-semibold uppercase">Next Meal</div>
+                <div id="nextMealName" class="font-bold text-white truncate max-w-[170px]">Loading...</div>
+              </div>
+              <span id="nextMealTime" class="font-bold text-white px-2.5 py-1 rounded-lg text-[11px] shadow-sm" style="background-color: var(--theme-accent);"></span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="timeline">
-        <div class="timeline-item"><span class="timeline-time">10:00 AM</span><span class="timeline-desc">Breakfast · Fasting Window Ends</span></div>
-        <div class="timeline-item"><span class="timeline-time">1:30 PM</span><span class="timeline-desc">Lunch</span></div>
-        <div class="timeline-item"><span class="timeline-time">6:00 PM</span><span class="timeline-desc">Dinner</span></div>
-        <div class="timeline-item"><span class="timeline-time">7:30 PM</span><span class="timeline-desc">Evening Treat</span></div>
-        <div class="timeline-item"><span class="timeline-time">8:00 PM</span><span class="timeline-desc">Fasting Begins (14 Hours)</span></div>
+
+      <!-- Today's Meal Plan Card -->
+      <div class="ios-card p-5 space-y-3">
+        <div class="flex items-center justify-between border-b border-brand-border/60 pb-2.5">
+          <h3 class="text-base font-serif font-bold text-brand-deep flex items-center gap-2">
+            <span>📅</span>
+            <span>Today's Meal Schedule</span>
+          </h3>
+          <span class="text-xs text-brand-accent font-semibold">10:00 AM – 8:00 PM</span>
+        </div>
+
+        <div id="todayMealsGrid" class="grid grid-cols-2 gap-2.5 pt-1">
+          <!-- Injected via JavaScript -->
+        </div>
       </div>
-    </div>
 
-    <div class="card">
-      <div class="card-header">
-        <h2 class="card-title">◉ Portion Guide</h2>
+      <!-- Mindset Rule Banner -->
+      <div class="ios-card p-4 border-l-4" style="border-left-color: var(--theme-accent); background-color: var(--theme-card-subtle);">
+        <h3 class="text-sm font-bold text-brand-deep flex items-center gap-1.5 mb-1">
+          <span>♥</span>
+          <span>Flexible, Not Fragile</span>
+        </h3>
+        <p class="text-xs text-brand-textMuted leading-relaxed">
+          If you have a social event or late dinner, enjoy it normally. No need to over-fast afterwards—simply resume your 10–8 rhythm tomorrow.
+        </p>
       </div>
-      <div class="portion-grid">
-        <div class="portion-box"><b>Protein</b><span>1–2 palms</span></div>
-        <div class="portion-box"><b>Carbs</b><span>~1 fist</span></div>
-        <div class="portion-box"><b>Vegetables</b><span>1–2+ fists</span></div>
-        <div class="portion-box"><b>Treat</b><span>~150–250 kcal</span></div>
+
+      <!-- Portion Guide & Guidelines Accordion Card -->
+      <div class="ios-card p-5 space-y-3">
+        <h3 class="text-sm font-bold text-brand-deep uppercase tracking-wider text-[11px]">Daily Guidelines & Portions</h3>
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <div class="bg-brand-bg/60 p-2.5 rounded-xl border border-brand-border/50">
+            <span class="font-bold text-brand-accent block">Protein</span>
+            <span class="text-brand-textMuted text-[11px]">1–2 palms</span>
+          </div>
+          <div class="bg-brand-bg/60 p-2.5 rounded-xl border border-brand-border/50">
+            <span class="font-bold text-brand-accent block">Carbs</span>
+            <span class="text-brand-textMuted text-[11px]">About 1 fist</span>
+          </div>
+          <div class="bg-brand-bg/60 p-2.5 rounded-xl border border-brand-border/50">
+            <span class="font-bold text-brand-accent block">Vegetables</span>
+            <span class="text-brand-textMuted text-[11px]">1–2+ fists</span>
+          </div>
+          <div class="bg-brand-bg/60 p-2.5 rounded-xl border border-brand-border/50">
+            <span class="font-bold text-brand-accent block">Evening Treat</span>
+            <span class="text-brand-textMuted text-[11px]">~150–250 kcal</span>
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-brand-border/40 space-y-1.5" id="rulesList">
+          <!-- Rules dynamically rendered -->
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- PLANNER TAB -->
-  <section id="planner" class="tab">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-      <h2 style="font-size:18px;margin:0;font-weight:800;">Weekly Plan</h2>
-      <button id="viewToggleBtn" style="background:none;border:none;color:var(--brand-accent);font-weight:700;font-size:13px;cursor:pointer;">Show Full Week</button>
-    </div>
+    <!-- ================= PLANNER TAB ================= -->
+    <section id="planner" class="tab-content hidden space-y-4">
+      
+      <!-- Day Navigation Bar -->
+      <div class="flex items-center justify-between bg-brand-card p-2 rounded-2xl border border-brand-border shadow-sm">
+        <div class="flex items-center gap-1 overflow-x-auto no-scrollbar w-full" id="daySelectorBar">
+          <!-- Day pill buttons dynamically injected -->
+        </div>
+      </div>
 
-    <div class="day-selector-bar" id="dayBar"></div>
-    <div id="plannerCards"></div>
+      <!-- View Toggle & Quick Actions Header -->
+      <div class="flex items-center justify-between px-1">
+        <div>
+          <h2 class="text-xl font-serif font-bold text-brand-deep">Weekly Planner</h2>
+          <p id="progressText" class="text-xs text-brand-textMuted">0 of 7 dinners completed</p>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <div class="bg-brand-bg p-1 rounded-xl border border-brand-border flex text-xs font-semibold">
+            <button id="modeSingle" class="px-3 py-1 rounded-lg font-bold transition-all bg-white text-brand-deep shadow-sm">Day</button>
+            <button id="modeAll" class="px-3 py-1 rounded-lg font-bold text-brand-textMuted transition-all">All</button>
+          </div>
+        </div>
+      </div>
 
-    <div style="display:flex;gap:10px;margin-top:16px;">
-      <button class="btn-secondary" id="resetWeekBtn">↻ Reset Week</button>
-      <button class="btn-primary" id="saveWeekBtn">Save Plan</button>
-    </div>
-  </section>
+      <!-- Planner Cards Holder -->
+      <div id="plannerContainer" class="space-y-4">
+        <!-- Day cards rendered dynamically -->
+      </div>
 
-  <!-- SHOPPING LIST TAB -->
-  <section id="shopping" class="tab">
-    <div class="add-bar">
-      <input id="shopInput" placeholder="Add custom item (e.g., Milk, Coffee)...">
-      <button class="btn-primary" id="addShopBtn" style="width:auto;padding:0 20px;">＋</button>
-    </div>
-    <div id="shopCategories"></div>
-    <div style="display:flex;gap:10px;margin-top:16px;">
-      <button class="btn-secondary" id="clearCheckedBtn">Clear Checked</button>
-      <button class="btn-primary" id="copyListBtn">Copy List</button>
-    </div>
-  </section>
-</main>
+      <div class="flex gap-2 pt-2">
+        <button id="btnReset" class="touch-scale flex-1 py-3 bg-brand-bg border border-brand-border text-brand-deep font-bold text-xs rounded-xl shadow-sm">
+          ↻ Reset Week
+        </button>
+        <button id="btnSave" class="touch-scale flex-1 py-3 text-white font-bold text-xs rounded-xl shadow-sm" style="background-color: var(--theme-accent);">
+          Save Week
+        </button>
+      </div>
+    </section>
 
-<!-- BOTTOM NAVIGATION BAR -->
-<nav class="bottom-bar">
-  <button class="nav-item on" data-tab="routine">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-    Routine
-  </button>
-  <button class="nav-item" data-tab="planner">
-    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-    Planner
-  </button>
-  <button class="nav-item" data-tab="shopping">
-    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-    Shopping
-  </button>
-</nav>
+    <!-- ================= SHOPPING TAB ================= -->
+    <section id="shopping" class="tab-content hidden space-y-4">
+      
+      <div class="flex items-center justify-between px-1">
+        <div>
+          <h2 class="text-xl font-serif font-bold text-brand-deep">Shopping List</h2>
+          <p class="text-xs text-brand-textMuted">Auto-built from planned meals</p>
+        </div>
+        <div class="flex gap-1.5">
+          <button id="btnClearChecked" class="touch-scale px-3 py-1.5 bg-brand-bg border border-brand-border text-brand-deep text-xs font-bold rounded-xl">
+            Clear Done
+          </button>
+          <button id="btnCopyList" class="touch-scale px-3.5 py-1.5 text-white text-xs font-bold rounded-xl shadow-sm" style="background-color: var(--theme-accent);">
+            Copy List
+          </button>
+        </div>
+      </div>
 
-<!-- ADD CUSTOM MEAL MODAL -->
-<div class="modal-overlay" id="customModal">
-  <div class="modal-sheet">
-    <h3 id="modalTitle">Add Custom Meal</h3>
-    <input id="customName" placeholder="Meal Name (e.g., Protein Smoothie)">
-    <input id="customPortion" placeholder="Portion guidance (optional)">
-    <div style="display:flex;gap:10px;margin-top:10px;">
-      <button class="btn-secondary" id="closeModalBtn">Cancel</button>
-      <button class="btn-primary" id="saveCustomBtn">Add Meal</button>
-    </div>
-  </div>
-</div>
+      <!-- Add Custom Item Input -->
+      <div class="ios-card p-2 flex items-center gap-2">
+        <input id="manualInput" type="text" placeholder="Add extra item (e.g. Milk, Coffee)..." class="flex-1 bg-transparent px-3 text-xs text-brand-textMain placeholder-brand-textMuted focus:outline-none">
+        <button id="btnAddManual" class="touch-scale px-4 py-2 text-white font-bold text-xs rounded-xl shadow-sm" style="background-color: var(--theme-accent);">
+          ＋ Add
+        </button>
+      </div>
 
-<!-- MANAGE CUSTOM MEALS MODAL -->
-<div class="modal-overlay" id="manageModal">
-  <div class="modal-sheet">
-    <h3 id="manageModalTitle">Manage Saved Custom Meals</h3>
-    <div id="manageCustomList" style="max-height:50vh;overflow-y:auto;margin-bottom:16px;"></div>
-    <button class="btn-secondary" id="closeManageModalBtn">Close</button>
-  </div>
-</div>
+      <!-- Categorized List -->
+      <div id="shoppingCategoryGrid" class="space-y-3">
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
 
-<div class="toast" id="toast"></div>
+  </main>
 
-<script>
-const DAYS=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-const DB={breakfast:{'Peanut butter toast + banana':['2 slices toast · ~20g peanut butter · 1 banana',['Bread','Peanut butter','Bananas']],'Tomato & egg toast':['2 slices toast · Tomato · 2 eggs',['Bread','Tomatoes','Eggs']],'Lasagna Topper + fruit':['1 Lasagna Topper · 1 piece of fruit or yoghurt',['Lasagna Toppers','Fruit','Yoghurt']],'Bacon & eggs':['2–3 eggs · 2 rashers bacon · 1–2 slices toast',['Eggs','Bacon','Bread','Tomatoes']]},lunch:{'Leftover mince stew':['1–1½ cups',[]],'Leftover butter chicken':['150–200g curry · ¾ cup cooked rice',[]],'Leftover pulled pork':['100–150g pork · 1–2 wraps',[]],'Leftover sausages':['2 sausages · Vegetables and/or a small amount of mash',[]],'Leftover Couplands family pie':['Approximately ¼ pie · Vegetables',[]],'Ramen + egg + vegetables':['1 packet · 1–2 eggs · 1 cup frozen veg',['Ramen','Eggs','Frozen vegetables']],'Baked beans on toast':['½–1 can baked beans · 1–2 slices toast',['Baked beans','Bread']],'Lasagna Topper':['1 Lasagna Topper · Fruit/yoghurt',['Lasagna Toppers','Fruit','Yoghurt']],'Lasagna Topper or ramen':['1 Lasagna Topper, or 1 packet ramen',['Lasagna Toppers','Ramen','Eggs','Frozen vegetables']]},dinner:{'Mince stew + mash + vegetables':['~1½ cups stew · ½–1 cup mash · 1–2 cups veg',['Beef mince','Potatoes','Frozen vegetables'],'Leftover mince stew'],'Crumbed chicken wraps':['2 wraps · Crumbed chicken · Salad · Sauce',['Crumbed chicken','Wraps','Salad/slaw']],'Butter chicken + rice':['150–200g curry · ¾–1 cup cooked rice',['Chicken','Butter chicken sauce','Rice','Frozen vegetables'],'Leftover butter chicken'],'Pulled pork wraps':['2 wraps · 120–150g pulled pork · Salad',['Pulled pork','Wraps','Salad/slaw'],'Leftover pulled pork'],'Sausages + mash + vegetables':['2–3 sausages · ½–1 cup mash · 1–2 cups veg',['Sausages','Potatoes','Frozen vegetables'],'Leftover sausages'],'Couplands family pie + vegetables':['Approximately ¼ pie · 1–2 cups veg',['Couplands family pie','Frozen vegetables'],'Leftover Couplands family pie'],'Double smash burger':['2 × beef patties · Bun · Cheese · Pickles/sauce',['Beef mince','Burger buns','Cheese','Pickles/onions','Burger sauce']]},snack:{'Chocolate':['20–30g',['Chocolate']],'Yoghurt':['150–200g',['Yoghurt']],'Popcorn':['Small bowl / 20–30g kernels',['Popcorn']],'Small ice cream':['½–1 cup or individual serving',['Ice cream']],'Ice cream':['½–1 cup or individual serving',['Ice cream']],'Fruit + yoghurt':['Fruit + yoghurt',['Fruit','Yoghurt']],'Optional/blank':['Optional — a planned treat is fine.',[]],'My choice':['Aim for roughly 150–250 calories.',[]]}};
-const S={Monday:{breakfast:'Peanut butter toast + banana',lunch:'Baked beans on toast',dinner:'Mince stew + mash + vegetables',snack:'Yoghurt'},Tuesday:{breakfast:'Tomato & egg toast',lunch:'Leftover mince stew',dinner:'Crumbed chicken wraps',snack:'Popcorn'},Wednesday:{breakfast:'Lasagna Topper + fruit',lunch:'Ramen + egg + vegetables',dinner:'Butter chicken + rice',snack:'Small ice cream'},Thursday:{breakfast:'Peanut butter toast + banana',lunch:'Leftover butter chicken',dinner:'Pulled pork wraps',snack:'Chocolate'},Friday:{breakfast:'Tomato & egg toast',lunch:'Leftover pulled pork',dinner:'Double smash burger',snack:'Optional/blank'},Saturday:{breakfast:'Bacon & eggs',lunch:'Lasagna Topper or ramen',dinner:'Sausages + mash + vegetables',snack:'My choice'},Sunday:{breakfast:'Bacon & eggs',lunch:'Leftover sausages',dinner:'Couplands family pie + vegetables',snack:'My choice'}};
-const CAT={MEAT:['Beef mince','Chicken','Pulled pork','Crumbed chicken','Sausages','Bacon'],'FRUIT & VEG':['Bananas','Tomatoes','Potatoes','Salad/slaw','Pickles/onions','Fruit'],DAIRY:['Eggs','Cheese','Yoghurt'],PANTRY:['Peanut butter','Baked beans','Ramen','Rice','Butter chicken sauce','Burger sauce','Chocolate','Popcorn'],FROZEN:['Frozen vegetables','Ice cream','Lasagna Toppers'],BAKERY:['Bread','Wraps','Burger buns','Couplands family pie']};
-
-const get=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch{return d}};
-let plan=get('my108-plan',JSON.parse(JSON.stringify(S))),custom=get('my108-custom',{breakfast:{},lunch:{},dinner:{},snack:{}}),checked=get('my108-checked',{}),manual=get('my108-manual',[]),selectedDay='Monday',showFullWeek=false,activeModalSlot=null;
-
-function persist(){
-  localStorage.setItem('my108-plan',JSON.stringify(plan));
-  localStorage.setItem('my108-custom',JSON.stringify(custom));
-  localStorage.setItem('my108-checked',JSON.stringify(checked));
-  localStorage.setItem('my108-manual',JSON.stringify(manual));
-}
-
-function toast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),1500);
-}
-
-// Theme handling
-const themeSelect=document.getElementById('themeSelect');
-const savedTheme=localStorage.getItem('my108-theme')||'forest';
-document.documentElement.setAttribute('data-theme',savedTheme);
-themeSelect.value=savedTheme;
-themeSelect.onchange=(e)=>{
-  const v=e.target.value;
-  document.documentElement.setAttribute('data-theme',v);
-  localStorage.setItem('my108-theme',v);
-};
-
-// Tabs navigation
-document.querySelectorAll('.nav-item').forEach(btn=>{
-  btn.onclick=()=>{
-    document.querySelectorAll('.nav-item,.tab').forEach(x=>x.classList.remove('on'));
-    btn.classList.add('on');
-    document.getElementById(btn.dataset.tab).classList.add('on');
-  };
-});
-
-function info(t,n){return DB[t]?.[n]||custom[t]?.[n]||['Custom meal',[]]}
-
-// Fasting Timer Logic
-function updateFastingRing(){
-  const now=new Date(),hrs=now.getHours(),mins=now.getMinutes(),secs=now.getSeconds();
-  const totalMins=hrs*60+mins;
-  const eatStart=600,eatEnd=1200; // 10:00 AM to 8:00 PM
-  let isEating=(totalMins>=eatStart&&totalMins<eatEnd);
-  
-  const statusBadge=document.getElementById('fastBadge');
-  const stateText=document.getElementById('ringStateText');
-  const timer=document.getElementById('ringTimer');
-  const subText=document.getElementById('ringSubText');
-  const circle=document.getElementById('ringCircle');
-  
-  let targetMins,elapsedMins,totalWindowMins;
-  if(isEating){
-    statusBadge.textContent="Eating Window";
-    stateText.textContent="EATING WINDOW";
-    targetMins=eatEnd;
-    elapsedMins=totalMins-eatStart;
-    totalWindowMins=600; // 10 hours
-    subText.textContent="Fasting starts at 8:00 PM";
-  }else{
-    statusBadge.textContent="Fasting Window";
-    stateText.textContent="FASTING WINDOW";
-    if(totalMins>=eatEnd){
-      elapsedMins=totalMins-eatEnd;
-      targetMins=1440+eatStart;
-    }else{
-      elapsedMins=(1440-eatEnd)+totalMins;
-      targetMins=eatStart;
-    }
-    totalWindowMins=840; // 14 hours
-    subText.textContent="Eating window opens at 10:00 AM";
-  }
-  
-  let remSecs=((targetMins>1440?targetMins-1440:targetMins)*60)-(hrs*3600+mins*60+secs);
-  if(remSecs<0)remSecs+=86400;
-  
-  const h=Math.floor(remSecs/3600).toString().padStart(2,'0');
-  const m=Math.floor((remSecs%3600)/60).toString().padStart(2,'0');
-  const s=(remSecs%60).toString().padStart(2,'0');
-  timer.textContent=`${h}:${m}:${s}`;
-  
-  const pct=Math.min(1,Math.max(0,elapsedMins/totalWindowMins));
-  circle.style.strokeDashoffset=440-(440*pct);
-}
-setInterval(updateFastingRing,1000);
-updateFastingRing();
-
-function renderTodayOverview(){
-  const today=DAYS[(new Date().getDay()+6)%7];
-  const d=plan[today];
-  document.getElementById('todayOverview').innerHTML=Object.entries(d).map(([t,v])=>`
-    <div class="today-meal-box">
-      <label>${t==='snack'?'7:30 PM TREAT':t}</label>
-      <span>${v}</span>
-    </div>
-  `).join('');
-}
-
-// Planner Render
-function renderPlanner(){
-  const bar=document.getElementById('dayBar');
-  bar.innerHTML=DAYS.map(d=>`
-    <div class="day-chip ${d===selectedDay&&!showFullWeek?'on':''}" onclick="selectDay('${d}')">${d}</div>
-  `).join('');
-
-  const container=document.getElementById('plannerCards');
-  container.innerHTML='';
-  
-  const daysToRender=showFullWeek?DAYS:[selectedDay];
-  daysToRender.forEach((day,di)=>{
-    const card=document.createElement('div');
-    card.className='card';
-    card.innerHTML=`<div class="card-header"><h3 class="card-title">${day}</h3></div>`;
+  <!-- BOTTOM IOS TAB BAR -->
+  <nav class="bottom-bar fixed bottom-0 inset-x-0 z-40 border-t flex justify-around items-center pt-2.5 pb-2 transition-colors duration-300">
+    <button data-tab="routine" class="tab-btn active touch-scale flex flex-col items-center gap-1 text-brand-accent">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      <span class="text-[10px] font-bold tracking-tight">Routine</span>
+    </button>
     
-    ['breakfast','lunch','dinner','snack'].forEach(t=>{
-      const mealDiv=document.createElement('div');
-      mealDiv.className='meal-card';
-      const isCustom = Boolean(custom[t][plan[day][t]]);
-      const names=[...Object.keys(DB[t]),...Object.keys(custom[t])];
-      
-      mealDiv.innerHTML=`
-        <div class="meal-label">
-          <span>${t==='snack'?'7:30 PM TREAT':t.toUpperCase()}</span>
+    <button data-tab="planner" class="tab-btn touch-scale flex flex-col items-center gap-1 text-brand-textMuted">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+      <span class="text-[10px] font-bold tracking-tight">Planner</span>
+    </button>
+
+    <button data-tab="shopping" class="tab-btn touch-scale flex flex-col items-center gap-1 text-brand-textMuted">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+      <span class="text-[10px] font-bold tracking-tight">Shopping</span>
+    </button>
+  </nav>
+
+  <!-- iOS Custom Meal Modal -->
+  <div id="modalOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-200">
+    <div class="ios-card max-w-sm w-full p-5 space-y-4 shadow-2xl scale-95 transition-transform duration-200">
+      <h3 id="modalTitle" class="text-base font-serif font-bold text-brand-deep border-b border-brand-border/60 pb-2">Add Custom Meal</h3>
+      <div class="space-y-3">
+        <div>
+          <label class="text-[10px] font-bold text-brand-accent uppercase">Meal Name</label>
+          <input id="modalMealName" type="text" placeholder="e.g. Scrambled eggs on toast" class="w-full mt-1 bg-brand-bg border border-brand-border rounded-xl px-3 py-2 text-xs text-brand-textMain focus:outline-none">
         </div>
-        <div class="select-row">
-          <select class="meal-select" data-day="${day}" data-type="${t}">
-            ${names.map(n=>`<option ${n===plan[day][t]?'selected':''}>${n}</option>`).join('')}
-            <option value="__ADD__">＋ Add Custom Meal...</option>
-            ${Object.keys(custom[t]).length>0 ? `<option value="__MANAGE__">⚙ Manage Custom Meals...</option>`:''}
-          </select>
-          <button class="btn-icon" data-add-custom="${t}" title="Add Custom Meal">＋</button>
-          ${isCustom ? `<button class="btn-icon btn-del" data-del-meal="${plan[day][t]}" data-type="${t}" title="Delete Custom Meal">×</button>` : ''}
+        <div>
+          <label class="text-[10px] font-bold text-brand-accent uppercase">Portion Guidance (Optional)</label>
+          <input id="modalPortion" type="text" placeholder="e.g. 2 eggs, 1 slice sourdough" class="w-full mt-1 bg-brand-bg border border-brand-border rounded-xl px-3 py-2 text-xs text-brand-textMain focus:outline-none">
         </div>
-        <div class="portion-desc">${info(t,plan[day][t])[0]}</div>
-        ${(t==='dinner'&&info(t,plan[day][t])[2])?'<div class="leftover-badge">↪ Makes leftover for tomorrow\'s lunch</div>':''}
-      `;
-      
-      const sel=mealDiv.querySelector('.meal-select');
-      sel.onchange=(e)=>{
-        if(e.target.value==='__ADD__'){
-          openCustomModal(t);
-          sel.value=plan[day][t];
-          return;
-        }
-        if(e.target.value==='__MANAGE__'){
-          openManageModal(t);
-          sel.value=plan[day][t];
-          return;
-        }
-        plan[day][t]=e.target.value;
-        if(t==='dinner'){
-          let left=info(t,e.target.value)[2];
-          let dIdx=DAYS.indexOf(day);
-          if(left&&dIdx<6){
-            let nd=DAYS[dIdx+1];
-            if(!plan[nd].lunch||plan[nd].lunch.startsWith('Leftover '))plan[nd].lunch=left;
-          }
-        }
-        persist();renderAll();
-      };
-
-      mealDiv.querySelector('[data-add-custom]')?.addEventListener('click',()=>openCustomModal(t));
-      
-      mealDiv.querySelector('[data-del-meal]')?.addEventListener('click',(e)=>{
-        const mealName = e.currentTarget.dataset.delMeal;
-        deleteCustomMeal(t, mealName);
-      });
-      
-      card.appendChild(mealDiv);
-    });
-    container.appendChild(card);
-  });
-}
-
-function selectDay(d){
-  selectedDay=d;
-  showFullWeek=false;
-  document.getElementById('viewToggleBtn').textContent='Show Full Week';
-  renderPlanner();
-}
-
-document.getElementById('viewToggleBtn').onclick=()=>{
-  showFullWeek=!showFullWeek;
-  document.getElementById('viewToggleBtn').textContent=showFullWeek?'Show Single Day':'Show Full Week';
-  renderPlanner();
-};
-
-// Custom Meal Deletion Logic
-function deleteCustomMeal(type, mealName){
-  if(confirm(`Delete custom meal "${mealName}"?`)){
-    delete custom[type][mealName];
-    DAYS.forEach(d=>{
-      if(plan[d][type]===mealName){
-        plan[d][type]=Object.keys(DB[type])[0];
-      }
-    });
-    persist();
-    renderAll();
-    toast('Custom meal deleted');
-  }
-}
-
-// Custom Modal
-function openCustomModal(type){
-  activeModalSlot=type;
-  document.getElementById('customName').value='';
-  document.getElementById('customPortion').value='';
-  document.getElementById('customModal').classList.add('on');
-}
-document.getElementById('closeModalBtn').onclick=()=>document.getElementById('customModal').classList.remove('on');
-document.getElementById('saveCustomBtn').onclick=()=>{
-  const name=document.getElementById('customName').value.trim();
-  const portion=document.getElementById('customPortion').value.trim()||'Your planned portion';
-  if(!name)return;
-  custom[activeModalSlot][name]=[portion,[]];
-  plan[selectedDay][activeModalSlot]=name;
-  persist();renderAll();
-  document.getElementById('customModal').classList.remove('on');
-  toast('Custom meal added ✓');
-};
-
-// Manage Custom Modal
-function openManageModal(type){
-  const listEl=document.getElementById('manageCustomList');
-  const items=Object.keys(custom[type]);
-  if(!items.length){
-    listEl.innerHTML='<p style="color:var(--text-muted);font-size:13px;">No custom meals saved for this category yet.</p>';
-  }else{
-    listEl.innerHTML=items.map(name=>`
-      <div class="custom-list-item">
-        <span>${name}</span>
-        <button class="btn-icon btn-del" style="width:32px;height:32px;font-size:14px;" onclick="deleteCustomMeal('${type}','${name}');openManageModal('${type}');">×</button>
       </div>
-    `).join('');
-  }
-  document.getElementById('manageModal').classList.add('on');
-}
-document.getElementById('closeManageModalBtn').onclick=()=>document.getElementById('manageModal').classList.remove('on');
+      <div class="flex gap-2 pt-2">
+        <button id="modalCancel" class="touch-scale flex-1 py-2.5 bg-brand-bg border border-brand-border text-brand-textMuted font-bold text-xs rounded-xl">Cancel</button>
+        <button id="modalConfirm" class="touch-scale flex-1 py-2.5 text-white font-bold text-xs rounded-xl shadow-sm" style="background-color: var(--theme-accent);">Add Meal</button>
+      </div>
+    </div>
+  </div>
 
-// Shopping List
-function ingredients(){
-  let s=new Set;
-  Object.values(plan).forEach(d=>Object.entries(d).forEach(([t,n])=>info(t,n)[1].forEach(i=>s.add(i))));
-  return [...s];
-}
-function category(i){
-  return Object.entries(CAT).find(([k,a])=>a.includes(i))?.[0]||'OTHER';
-}
-function renderShop(){
-  const el=document.getElementById('shopCategories');
-  el.innerHTML='';
-  const auto=ingredients();
-  [...Object.keys(CAT),'OTHER'].forEach(cat=>{
-    const items=[...auto.filter(i=>category(i)===cat),...manual.filter(i=>category(i)===cat)];
-    if(!items.length)return;
-    const card=document.createElement('div');
-    card.className='card';
-    card.innerHTML=`<div class="card-header"><h3 class="card-title">${cat}</h3></div>`;
-    items.forEach(i=>{
-      const div=document.createElement('div');
-      div.className=`shop-item ${checked[i]?'done':''}`;
-      div.innerHTML=`
-        <input type="checkbox" ${checked[i]?'checked':''}>
-        <span>${i}</span>
-        ${manual.includes(i)?`<button class="btn-icon btn-del" style="width:28px;height:28px;font-size:14px;">×</button>`:''}
-      `;
-      div.querySelector('input').onchange=(e)=>{
-        checked[i]=e.target.checked;
-        persist();renderShop();
-      };
-      if(manual.includes(i)){
-        div.querySelector('.btn-del').onclick=()=>{
-          manual=manual.filter(x=>x!==i);
-          persist();renderShop();
-        };
+  <!-- Theme Selector Modal -->
+  <div id="themeModalOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-200">
+    <div class="ios-card max-w-sm w-full p-5 space-y-4 shadow-2xl scale-95 transition-transform duration-200">
+      <div class="flex items-center justify-between border-b border-brand-border/60 pb-3">
+        <h3 class="text-lg font-serif font-bold text-brand-deep">Select Theme Palette</h3>
+        <button id="themeModalClose" class="text-brand-textMuted font-bold text-lg px-2">✕</button>
+      </div>
+      
+      <div class="space-y-2.5 max-h-[60vh] overflow-y-auto no-scrollbar py-1" id="themeOptionList">
+        <!-- Theme options dynamically injected -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-brand-deep text-white px-4 py-2.5 rounded-full shadow-lg text-xs font-bold flex items-center gap-2 opacity-0 pointer-events-none transition-opacity duration-200 border border-white/10">
+    <span id="toastIcon" class="text-emerald-400">✓</span>
+    <span id="toastMessage">Saved!</span>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    const THEMES = [
+      { id: 'forest', name: 'Forest & Terracotta', desc: 'Classic earthy sage & rust', bg: '#173f32', accent: '#c8612c' },
+      { id: 'midnight', name: 'Midnight & Neon Mint', desc: 'Sleek dark mode with mint highlights', bg: '#0f172a', accent: '#10b981' },
+      { id: 'nordic', name: 'Nordic Sage & Warm Oat', desc: 'Clean, soft muted natural tones', bg: '#2e4036', accent: '#d97757' },
+      { id: 'ocean', name: 'Ocean & Amber', desc: 'Deep navy header with amber accents', bg: '#0f2a4a', accent: '#f59e0b' },
+      { id: 'slate', name: 'Minimal Slate & Indigo', desc: 'Modern slate with indigo pops', bg: '#1e293b', accent: '#6366f1' }
+    ];
+
+    const DB = {
+      breakfast: {
+        'Peanut butter toast + banana': ['2 slices toast · ~20g peanut butter · 1 banana', ['Bread', 'Peanut butter', 'Bananas']],
+        'Tomato & egg toast': ['2 slices toast · Tomato · 2 eggs', ['Bread', 'Tomatoes', 'Eggs']],
+        'Lasagna Topper + fruit': ['1 Lasagna Topper · 1 piece of fruit or yoghurt', ['Lasagna Toppers', 'Fruit', 'Yoghurt']],
+        'Bacon & eggs': ['2–3 eggs · 2 rashers bacon · 1–2 slices toast · Tomato optional', ['Eggs', 'Bacon', 'Bread', 'Tomatoes']]
+      },
+      lunch: {
+        'Leftover mince stew': ['1–1½ cups', []],
+        'Leftover butter chicken': ['150–200g curry · ¾ cup cooked rice', []],
+        'Leftover pulled pork': ['100–150g pork · 1–2 wraps', []],
+        'Leftover sausages': ['2 sausages · Vegetables and/or a small amount of mash', []],
+        'Leftover Couplands family pie': ['Approximately ¼ pie · Vegetables', []],
+        'Ramen + egg + vegetables': ['1 packet · 1–2 eggs · About 1 cup frozen vegetables', ['Ramen', 'Eggs', 'Frozen vegetables']],
+        'Baked beans on toast': ['½–1 can baked beans · 1–2 slices toast', ['Baked beans', 'Bread']],
+        'Lasagna Topper': ['1 Lasagna Topper · Fruit/yoghurt if wanted', ['Lasagna Toppers', 'Fruit', 'Yoghurt']],
+        'Lasagna Topper or ramen': ['1 Lasagna Topper, or 1 packet ramen with egg/vegetables', ['Lasagna Toppers', 'Ramen', 'Eggs', 'Frozen vegetables']]
+      },
+      dinner: {
+        'Mince stew + mash + vegetables': ['~1½ cups stew · ½–1 cup mash · 1–2 cups vegetables', ['Beef mince', 'Potatoes', 'Frozen vegetables'], 'Leftover mince stew'],
+        'Crumbed chicken wraps': ['2 wraps · Crumbed chicken · Salad · Sensible amount of sauce', ['Crumbed chicken', 'Wraps', 'Salad/slaw']],
+        'Butter chicken + rice': ['150–200g curry · ¾–1 cup cooked rice · Vegetables optional', ['Chicken', 'Butter chicken sauce', 'Rice', 'Frozen vegetables'], 'Leftover butter chicken'],
+        'Pulled pork wraps': ['2 wraps · 120–150g pulled pork total · Salad/slaw · Sauce', ['Pulled pork', 'Wraps', 'Salad/slaw'], 'Leftover pulled pork'],
+        'Sausages + mash + vegetables': ['2–3 sausages · ½–1 cup mash · 1–2 cups vegetables', ['Sausages', 'Potatoes', 'Frozen vegetables'], 'Leftover sausages'],
+        'Couplands family pie + vegetables': ['Approximately ¼ pie · 1–2 cups vegetables', ['Couplands family pie', 'Frozen vegetables'], 'Leftover Couplands family pie'],
+        'Double smash burger': ['2 × 80–100g beef patties · Normal burger bun · Cheese · Pickles/onion · Burger sauce · No sides', ['Beef mince', 'Burger buns', 'Cheese', 'Pickles/onions', 'Burger sauce']]
+      },
+      snack: {
+        'Chocolate': ['20–30g', ['Chocolate']],
+        'Yoghurt': ['150–200g', ['Yoghurt']],
+        'Popcorn': ['Small bowl / 20–30g kernels', ['Popcorn']],
+        'Small ice cream': ['½–1 cup or individual serving', ['Ice cream']],
+        'Ice cream': ['½–1 cup or individual serving', ['Ice cream']],
+        'Fruit + yoghurt': ['Fruit + yoghurt', ['Fruit', 'Yoghurt']],
+        'Optional/blank': ['Optional — a planned treat is fine.', []],
+        'My choice': ['Aim for roughly 150–250 calories if useful.', []]
       }
-      card.appendChild(div);
+    };
+
+    const SUGGESTED_PLAN = {
+      Monday: { breakfast: 'Peanut butter toast + banana', lunch: 'Baked beans on toast', dinner: 'Mince stew + mash + vegetables', snack: 'Yoghurt' },
+      Tuesday: { breakfast: 'Tomato & egg toast', lunch: 'Leftover mince stew', dinner: 'Crumbed chicken wraps', snack: 'Popcorn' },
+      Wednesday: { breakfast: 'Lasagna Topper + fruit', lunch: 'Ramen + egg + vegetables', dinner: 'Butter chicken + rice', snack: 'Small ice cream' },
+      Thursday: { breakfast: 'Peanut butter toast + banana', lunch: 'Leftover butter chicken', dinner: 'Pulled pork wraps', snack: 'Chocolate' },
+      Friday: { breakfast: 'Tomato & egg toast', lunch: 'Leftover pulled pork', dinner: 'Double smash burger', snack: 'Optional/blank' },
+      Saturday: { breakfast: 'Bacon & eggs', lunch: 'Lasagna Topper or ramen', dinner: 'Sausages + mash + vegetables', snack: 'My choice' },
+      Sunday: { breakfast: 'Bacon & eggs', lunch: 'Leftover sausages', dinner: 'Couplands family pie + vegetables', snack: 'My choice' }
+    };
+
+    const CATEGORIES = {
+      MEAT: ['Beef mince', 'Chicken', 'Pulled pork', 'Crumbed chicken', 'Sausages', 'Bacon'],
+      'FRUIT & VEG': ['Bananas', 'Tomatoes', 'Potatoes', 'Salad/slaw', 'Pickles/onions', 'Fruit'],
+      DAIRY: ['Eggs', 'Cheese', 'Yoghurt'],
+      PANTRY: ['Peanut butter', 'Baked beans', 'Ramen', 'Rice', 'Butter chicken sauce', 'Burger sauce', 'Chocolate', 'Popcorn'],
+      FROZEN: ['Frozen vegetables', 'Ice cream', 'Lasagna Toppers'],
+      BAKERY: ['Bread', 'Wraps', 'Burger buns', 'Couplands family pie']
+    };
+
+    const RULES = [
+      "Make enough dinner for tomorrow's lunch where appropriate.",
+      'Add vegetables rather than making meals tiny.',
+      'One planned evening treat is fine.',
+      'Friday or Saturday burger is my end-of-week enjoyment meal, not an entire "cheat day".',
+      'Bored after 8 pm? Have a zero-calorie drink and wait 15 minutes.',
+      'If genuinely hungry, eat rather than blindly sticking to the clock.',
+      'Social occasions override the fasting schedule.',
+      "Don't compensate afterwards. Just return to normal."
+    ];
+
+    // Helpers
+    const clone = x => JSON.parse(JSON.stringify(x));
+    const getItem = (key, fallback) => {
+      try {
+        const val = localStorage.getItem(key);
+        return val ? JSON.parse(val) : fallback;
+      } catch {
+        return fallback;
+      }
+    };
+
+    // App State
+    let currentTheme = getItem('my108-theme', 'forest');
+    let plan = getItem('my108-plan', clone(SUGGESTED_PLAN));
+    let custom = getItem('my108-custom', { breakfast: {}, lunch: {}, dinner: {}, snack: {} });
+    let made = getItem('my108-made', {});
+    let checked = getItem('my108-checked', {});
+    let manual = getItem('my108-manual', []);
+
+    // Planner View State
+    let selectedDay = DAYS[(new Date().getDay() + 6) % 7];
+    let isAllDaysMode = false;
+
+    // Modal state
+    let pendingModalSlot = null;
+    let pendingModalDay = null;
+
+    // Theme Management
+    function applyTheme(themeId) {
+      currentTheme = themeId;
+      localStorage.setItem('my108-theme', JSON.stringify(themeId));
+
+      if (themeId === 'forest') {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', themeId);
+      }
+
+      renderThemeOptions();
+      updateFastingStatus();
+    }
+
+    function renderThemeOptions() {
+      const container = document.getElementById('themeOptionList');
+      if (!container) return;
+
+      container.innerHTML = THEMES.map(t => {
+        const isActive = t.id === currentTheme;
+        return `
+          <button data-theme-id="${t.id}" class="btn-select-theme touch-scale w-full p-3 rounded-2xl border text-left flex items-center justify-between transition-all ${isActive ? 'border-brand-accent bg-brand-accentLight/40 ring-2 ring-brand-accent/30' : 'border-brand-border bg-brand-bg/50'}">
+            <div class="flex items-center gap-3">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center shadow-sm border border-white/20" style="background-color: ${t.bg};">
+                <span class="w-2.5 h-2.5 rounded-full" style="background-color: ${t.accent};"></span>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-brand-textMain">${t.name}</div>
+                <div class="text-[10px] text-brand-textMuted">${t.desc}</div>
+              </div>
+            </div>
+            ${isActive ? '<span class="text-brand-accent font-bold text-sm">✓</span>' : ''}
+          </button>
+        `;
+      }).join('');
+
+      document.querySelectorAll('.btn-select-theme').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const tid = e.currentTarget.dataset.themeId;
+          applyTheme(tid);
+          closeThemeModal();
+          showToast('Theme updated!');
+        });
+      });
+    }
+
+    function openThemeModal() {
+      const overlay = document.getElementById('themeModalOverlay');
+      overlay.classList.remove('opacity-0', 'pointer-events-none');
+      overlay.classList.add('opacity-100');
+    }
+
+    function closeThemeModal() {
+      const overlay = document.getElementById('themeModalOverlay');
+      overlay.classList.remove('opacity-100');
+      overlay.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function persist() {
+      localStorage.setItem('my108-custom', JSON.stringify(custom));
+      localStorage.setItem('my108-made', JSON.stringify(made));
+      localStorage.setItem('my108-checked', JSON.stringify(checked));
+      localStorage.setItem('my108-manual', JSON.stringify(manual));
+      localStorage.setItem('my108-plan', JSON.stringify(plan));
+    }
+
+    function showToast(msg, icon = '✓') {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMessage').textContent = msg;
+      document.getElementById('toastIcon').textContent = icon;
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      toast.classList.add('opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 2000);
+    }
+
+    function getMealInfo(type, name) {
+      if (DB[type] && DB[type][name]) return DB[type][name];
+      if (custom[type] && custom[type][name]) return custom[type][name];
+      return ['Custom meal', []];
+    }
+
+    // Dynamic Fasting Timer & Radial SVG Circle Updater
+    function updateFastingStatus() {
+      const now = new Date();
+      const currentDayStr = DAYS[(now.getDay() + 6) % 7];
+      const hours = now.getHours();
+      const mins = now.getMinutes();
+      const secs = now.getSeconds();
+
+      const clockStr = `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      document.getElementById('liveClock').textContent = clockStr;
+      document.getElementById('todayDayName').textContent = `Today · ${currentDayStr}`;
+
+      const totalMins = hours * 60 + mins;
+      const windowStart = 10 * 60; // 10:00 AM (600m)
+      const windowEnd = 20 * 60;   // 8:00 PM (1200m)
+
+      const isEatingWindow = totalMins >= windowStart && totalMins < windowEnd;
+
+      const badgeDot = document.getElementById('fastingBadgeDot');
+      const badgeText = document.getElementById('fastingBadgeText');
+      const timerLabel = document.getElementById('fastingCountdownLabel');
+      const timerVal = document.getElementById('fastingTimer');
+      const circle = document.getElementById('radialProgressCircle');
+      const ringPercentText = document.getElementById('ringPercentText');
+      const ringSubLabel = document.getElementById('ringSubLabel');
+
+      const circleLength = 314.159; // 2 * PI * r (r=50)
+
+      if (isEatingWindow) {
+        const elapsedMins = totalMins - windowStart;
+        const totalWindowMins = 10 * 60;
+        const percent = Math.min(100, Math.max(0, (elapsedMins / totalWindowMins) * 100));
+        
+        const strokeOffset = circleLength - (percent / 100) * circleLength;
+        circle.style.strokeDashoffset = strokeOffset;
+        circle.setAttribute('stroke', 'var(--theme-accent)');
+
+        ringPercentText.textContent = `${Math.round(percent)}%`;
+        ringSubLabel.textContent = 'Eating Window';
+
+        badgeDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400';
+        badgeText.textContent = 'Eating Window Active';
+        badgeText.className = 'text-xs font-bold uppercase tracking-wider text-emerald-300';
+        timerLabel.textContent = 'Window Closes In';
+
+        const diffMins = windowEnd - totalMins;
+        const h = Math.floor(diffMins / 60);
+        const m = diffMins % 60;
+        timerVal.textContent = `${h}h ${m}m`;
+      } else {
+        let elapsedMins = 0;
+        const totalWindowMins = 14 * 60;
+
+        if (totalMins >= windowEnd) {
+          elapsedMins = totalMins - windowEnd;
+        } else {
+          elapsedMins = (4 * 60) + totalMins;
+        }
+
+        const percent = Math.min(100, Math.max(0, (elapsedMins / totalWindowMins) * 100));
+        const strokeOffset = circleLength - (percent / 100) * circleLength;
+        circle.style.strokeDashoffset = strokeOffset;
+        circle.setAttribute('stroke', '#38bdf8');
+
+        ringPercentText.textContent = `${Math.round(percent)}%`;
+        ringSubLabel.textContent = 'Fasting Progress';
+
+        badgeDot.className = 'w-2.5 h-2.5 rounded-full bg-amber-400';
+        badgeText.textContent = 'Fasting Period Active';
+        badgeText.className = 'text-xs font-bold uppercase tracking-wider text-amber-300';
+        timerLabel.textContent = 'Window Opens In';
+
+        let diffMins = 0;
+        if (totalMins >= windowEnd) {
+          diffMins = (24 * 60 - totalMins) + windowStart;
+        } else {
+          diffMins = windowStart - totalMins;
+        }
+        const h = Math.floor(diffMins / 60);
+        const m = diffMins % 60;
+        timerVal.textContent = `${h}h ${m}m`;
+      }
+
+      // Next Meal Computation
+      let nextMeal = '';
+      let nextTime = '';
+
+      if (totalMins < 10 * 60) {
+        nextMeal = plan[currentDayStr].breakfast;
+        nextTime = '10:00 AM';
+      } else if (totalMins < 13 * 60 + 30) {
+        nextMeal = plan[currentDayStr].lunch;
+        nextTime = '1:30 PM';
+      } else if (totalMins < 17 * 60 + 30) {
+        nextMeal = plan[currentDayStr].dinner;
+        nextTime = '5:30 PM';
+      } else if (totalMins < 19 * 60 + 30) {
+        nextMeal = plan[currentDayStr].snack;
+        nextTime = '7:30 PM';
+      } else {
+        const nextDayStr = DAYS[(now.getDay()) % 7];
+        nextMeal = plan[nextDayStr].breakfast;
+        nextTime = 'Tomorrow 10 AM';
+      }
+
+      document.getElementById('nextMealName').textContent = nextMeal;
+      document.getElementById('nextMealTime').textContent = nextTime;
+    }
+
+    // Today Routine Tab View
+    function renderTodayRoutine() {
+      const now = new Date();
+      const currentDayStr = DAYS[(now.getDay() + 6) % 7];
+      const todayPlan = plan[currentDayStr];
+      const grid = document.getElementById('todayMealsGrid');
+
+      const mealMeta = {
+        breakfast: { label: 'Breakfast', icon: '🍳' },
+        lunch: { label: 'Lunch', icon: '🥗' },
+        dinner: { label: 'Dinner', icon: '🍲' },
+        snack: { label: '7:30 PM Snack', icon: '🍎' }
+      };
+
+      grid.innerHTML = Object.entries(todayPlan).map(([type, mealName]) => `
+        <div class="bg-brand-bg/80 border border-brand-border/60 p-3 rounded-xl flex flex-col justify-between">
+          <div>
+            <div class="text-[10px] font-extrabold text-brand-accent uppercase tracking-wider flex items-center gap-1">
+              <span>${mealMeta[type].icon}</span>
+              <span>${mealMeta[type].label}</span>
+            </div>
+            <div class="text-xs font-bold text-brand-deep mt-1 leading-snug">${mealName}</div>
+          </div>
+          <div class="text-[10px] text-brand-textMuted mt-1.5 truncate">${getMealInfo(type, mealName)[0]}</div>
+        </div>
+      `).join('');
+    }
+
+    // Guidelines List
+    function renderRules() {
+      const container = document.getElementById('rulesList');
+      container.innerHTML = RULES.map(rule => `
+        <div class="flex items-start gap-2 bg-brand-bg/50 p-2.5 rounded-xl border border-brand-border/40 text-xs text-brand-textMain">
+          <span class="text-brand-accent font-bold">✓</span>
+          <span class="leading-tight">${rule}</span>
+        </div>
+      `).join('');
+    }
+
+    // Render Planner Tab
+    function renderPlanner() {
+      const bar = document.getElementById('daySelectorBar');
+      const container = document.getElementById('plannerContainer');
+
+      bar.style.display = isAllDaysMode ? 'none' : 'flex';
+      bar.innerHTML = DAYS.map(day => {
+        const isSelected = day === selectedDay;
+        const isCompleted = !!made[day];
+        return `
+          <button data-day="${day}" class="btn-day-pill touch-scale flex-1 min-w-[62px] py-2 px-1 rounded-xl text-center flex flex-col items-center justify-center transition-all ${isSelected ? 'bg-brand-deep text-white shadow-md' : 'bg-white border border-brand-border text-brand-textMain'}">
+            <span class="text-[10px] font-bold uppercase tracking-tight opacity-80">${day.substring(0, 3)}</span>
+            <span class="text-xs font-extrabold">${isCompleted ? '✓' : '•'}</span>
+          </button>
+        `;
+      }).join('');
+
+      document.querySelectorAll('.btn-day-pill').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          selectedDay = e.currentTarget.dataset.day;
+          renderPlanner();
+        });
+      });
+
+      const targetDays = isAllDaysMode ? DAYS : [selectedDay];
+      container.innerHTML = '';
+
+      targetDays.forEach((day) => {
+        const dayCard = document.createElement('div');
+        dayCard.className = 'ios-card overflow-hidden';
+
+        const isEnjoymentDay = day === 'Friday' || day === 'Saturday';
+
+        dayCard.innerHTML = `
+          <div class="bg-brand-deep text-white px-4 py-3 flex items-center justify-between">
+            <h3 class="text-base font-serif font-bold">${day}</h3>
+            ${isEnjoymentDay ? '<span class="text-[10px] bg-brand-accent text-white px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">Enjoyment-friendly</span>' : ''}
+          </div>
+          <div class="p-4 space-y-3.5">
+            ${['breakfast', 'lunch', 'dinner', 'snack'].map(type => {
+              const selectedMeal = plan[day][type];
+              const availableNames = [...Object.keys(DB[type]), ...Object.keys(custom[type])];
+              const info = getMealInfo(type, selectedMeal);
+              const isLeftoverSuggestion = type === 'dinner' && info[2];
+
+              return `
+                <div class="meal-slot border-b border-brand-border/40 pb-3 last:border-0 last:pb-0">
+                  <div class="flex justify-between items-center mb-1">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-brand-accent">
+                      ${type === 'snack' ? '7:30 PM Snack' : type}
+                    </label>
+                  </div>
+                  <div class="flex gap-1.5">
+                    <select data-day="${day}" data-type="${type}" class="meal-select flex-1 bg-brand-bg border border-brand-border rounded-xl px-3 text-xs text-brand-textMain font-medium focus:outline-none focus:ring-2 focus:ring-brand-accent/50">
+                      ${availableNames.map(name => `<option value="${name}" ${name === selectedMeal ? 'selected' : ''}>${name}</option>`).join('')}
+                    </select>
+                    <button data-day="${day}" data-type="${type}" class="btn-add-custom touch-scale px-3 bg-brand-bg border border-brand-border rounded-xl text-brand-deep font-bold text-sm">
+                      ＋
+                    </button>
+                  </div>
+                  <div class="text-[11px] text-brand-textMuted mt-1 leading-normal px-0.5">${info[0]}</div>
+                  ${isLeftoverSuggestion ? `<div class="mt-1 text-[11px] text-brand-accent bg-brand-accentLight px-2.5 py-1 rounded-lg border border-brand-accent/20">↪ Automatically makes enough for tomorrow's lunch</div>` : ''}
+                </div>
+              `;
+            }).join('')}
+
+            <button data-day="${day}" class="btn-made-toggle touch-scale w-full mt-2 py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 ${made[day] ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-brand-bg text-brand-deep border border-brand-border'}">
+              <span>${made[day] ? '✓ Made as planned' : 'Tonight: Made it?'}</span>
+            </button>
+          </div>
+        `;
+
+        container.appendChild(dayCard);
+      });
+
+      const completedCount = Object.values(made).filter(Boolean).length;
+      document.getElementById('progressText').textContent = `${completedCount} of 7 planned dinners completed.`;
+
+      document.querySelectorAll('.meal-select').forEach(select => {
+        select.addEventListener('change', (e) => {
+          const d = e.target.dataset.day;
+          const t = e.target.dataset.type;
+          const val = e.target.value;
+          plan[d][t] = val;
+
+          if (t === 'dinner') {
+            const info = getMealInfo('dinner', val);
+            const leftoverLunch = info[2];
+            const dIdx = DAYS.indexOf(d);
+            if (leftoverLunch && dIdx < 6) {
+              const nextDay = DAYS[dIdx + 1];
+              const currentLunch = plan[nextDay].lunch;
+              if (!currentLunch || currentLunch.startsWith('Leftover ')) {
+                plan[nextDay].lunch = leftoverLunch;
+              }
+            }
+          }
+
+          persist();
+          renderAll();
+          showToast('Plan updated');
+        });
+      });
+
+      document.querySelectorAll('.btn-add-custom').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          pendingModalDay = e.currentTarget.dataset.day;
+          pendingModalSlot = e.currentTarget.dataset.type;
+          openModal(`Custom ${pendingModalSlot.toUpperCase()}`);
+        });
+      });
+
+      document.querySelectorAll('.btn-made-toggle').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const d = e.currentTarget.dataset.day;
+          made[d] = !made[d];
+          persist();
+          renderAll();
+          showToast(made[d] ? `${d} marked completed!` : `${d} un-marked`);
+        });
+      });
+    }
+
+    function getAggregatedIngredients() {
+      const items = new Set();
+      Object.values(plan).forEach(day => {
+        Object.entries(day).forEach(([type, mealName]) => {
+          const info = getMealInfo(type, mealName);
+          if (info[1] && Array.isArray(info[1])) {
+            info[1].forEach(ing => items.add(ing));
+          }
+        });
+      });
+      return [...items];
+    }
+
+    function getCategoryForIngredient(item) {
+      for (const [cat, items] of Object.entries(CATEGORIES)) {
+        if (items.includes(item)) return cat;
+      }
+      return 'OTHER';
+    }
+
+    function renderShopping() {
+      const container = document.getElementById('shoppingCategoryGrid');
+      container.innerHTML = '';
+
+      const autoIngredients = getAggregatedIngredients();
+      const allCategoryKeys = [...Object.keys(CATEGORIES), 'OTHER'];
+
+      allCategoryKeys.forEach(category => {
+        const autoCatItems = autoIngredients.filter(i => getCategoryForIngredient(i) === category);
+        const manualCatItems = manual.filter(i => getCategoryForIngredient(i) === category);
+        const totalItems = [...autoCatItems, ...manualCatItems];
+
+        if (totalItems.length === 0) return;
+
+        const catCard = document.createElement('div');
+        catCard.className = 'ios-card p-4 space-y-2';
+
+        catCard.innerHTML = `
+          <h3 class="text-xs font-bold text-brand-accent uppercase tracking-wider font-serif mb-2 border-b border-brand-border/40 pb-1.5 flex justify-between items-center">
+            <span>${category}</span>
+            <span class="text-[10px] text-brand-textMuted font-sans font-normal">${totalItems.length} items</span>
+          </h3>
+          <div class="space-y-1">
+            ${totalItems.map(item => {
+              const isChecked = !!checked[item];
+              const isManual = manual.includes(item);
+
+              return `
+                <label class="flex items-center justify-between p-2 rounded-xl hover:bg-brand-bg transition-colors cursor-pointer text-xs ${isChecked ? 'line-through text-brand-textMuted opacity-60' : 'text-brand-textMain'}">
+                  <div class="flex items-center gap-2.5 flex-1">
+                    <input type="checkbox" data-item="${item}" class="chk-item w-4 h-4 rounded accent-brand-accent border-brand-border" ${isChecked ? 'checked' : ''}>
+                    <span class="font-medium">${item}</span>
+                  </div>
+                  ${isManual ? `<button data-item="${item}" class="btn-del-manual text-red-400 font-bold px-2 py-0.5 rounded text-xs active:bg-red-50">✕</button>` : ''}
+                </label>
+              `;
+            }).join('')}
+          </div>
+        `;
+
+        container.appendChild(catCard);
+      });
+
+      document.querySelectorAll('.chk-item').forEach(chk => {
+        chk.addEventListener('change', (e) => {
+          const item = e.target.dataset.item;
+          checked[item] = e.target.checked;
+          persist();
+          renderShopping();
+        });
+      });
+
+      document.querySelectorAll('.btn-del-manual').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const item = e.currentTarget.dataset.item;
+          manual = manual.filter(x => x !== item);
+          persist();
+          renderShopping();
+          showToast('Item removed');
+        });
+      });
+    }
+
+    function openModal(title) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalMealName').value = '';
+      document.getElementById('modalPortion').value = '';
+      const overlay = document.getElementById('modalOverlay');
+      overlay.classList.remove('opacity-0', 'pointer-events-none');
+      overlay.classList.add('opacity-100');
+      document.getElementById('modalMealName').focus();
+    }
+
+    function closeModal() {
+      const overlay = document.getElementById('modalOverlay');
+      overlay.classList.remove('opacity-100');
+      overlay.classList.add('opacity-0', 'pointer-events-none');
+      pendingModalDay = null;
+      pendingModalSlot = null;
+    }
+
+    function setupNavigation() {
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tabName = btn.dataset.tab;
+
+          document.querySelectorAll('.tab-content').forEach(tc => tc.classList.add('hidden'));
+          document.getElementById(tabName).classList.remove('hidden');
+
+          buttons.forEach(b => {
+            if (b.dataset.tab === tabName) {
+              b.className = 'tab-btn touch-scale flex flex-col items-center gap-1 text-brand-accent';
+            } else {
+              b.className = 'tab-btn touch-scale flex flex-col items-center gap-1 text-brand-textMuted';
+            }
+          });
+
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+    }
+
+    function renderAll() {
+      renderTodayRoutine();
+      renderPlanner();
+      renderShopping();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      applyTheme(currentTheme);
+      setupNavigation();
+      renderRules();
+      renderAll();
+
+      updateFastingStatus();
+      setInterval(updateFastingStatus, 1000);
+
+      document.getElementById('btnOpenThemeModal').addEventListener('click', openThemeModal);
+      document.getElementById('themeModalClose').addEventListener('click', closeThemeModal);
+
+      document.getElementById('modeSingle').addEventListener('click', () => {
+        isAllDaysMode = false;
+        document.getElementById('modeSingle').className = 'px-3 py-1 rounded-lg font-bold transition-all bg-white text-brand-deep shadow-sm';
+        document.getElementById('modeAll').className = 'px-3 py-1 rounded-lg font-bold text-brand-textMuted transition-all';
+        renderPlanner();
+      });
+
+      document.getElementById('modeAll').addEventListener('click', () => {
+        isAllDaysMode = true;
+        document.getElementById('modeAll').className = 'px-3 py-1 rounded-lg font-bold transition-all bg-white text-brand-deep shadow-sm';
+        document.getElementById('modeSingle').className = 'px-3 py-1 rounded-lg font-bold text-brand-textMuted transition-all';
+        renderPlanner();
+      });
+
+      document.getElementById('btnReset').addEventListener('click', () => {
+        if (confirm('Reset planner to suggested default week?')) {
+          plan = clone(SUGGESTED_PLAN);
+          made = {};
+          persist();
+          renderAll();
+          showToast('Reset to suggested week');
+        }
+      });
+
+      document.getElementById('btnSave').addEventListener('click', () => {
+        persist();
+        showToast('Week saved');
+      });
+
+      const addManualHandler = () => {
+        const input = document.getElementById('manualInput');
+        const val = input.value.trim();
+        if (val && !manual.includes(val)) {
+          manual.push(val);
+          input.value = '';
+          persist();
+          renderShopping();
+          showToast('Added to list');
+        }
+      };
+
+      document.getElementById('btnAddManual').addEventListener('click', addManualHandler);
+      document.getElementById('manualInput').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') addManualHandler();
+      });
+
+      document.getElementById('btnClearChecked').addEventListener('click', () => {
+        checked = {};
+        persist();
+        renderShopping();
+        showToast('Cleared checked items');
+      });
+
+      document.getElementById('btnCopyList').addEventListener('click', () => {
+        const list = [...getAggregatedIngredients(), ...manual].filter(i => !checked[i]);
+        if (list.length === 0) {
+          showToast('Shopping list is empty');
+          return;
+        }
+
+        const textToCopy = list.join('\n');
+        try {
+          const textarea = document.createElement('textarea');
+          textarea.value = textToCopy;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+          showToast('List copied to clipboard');
+        } catch {
+          prompt('Copy your shopping list:', textToCopy);
+        }
+      });
+
+      document.getElementById('modalCancel').addEventListener('click', closeModal);
+      document.getElementById('modalConfirm').addEventListener('click', () => {
+        const nameInput = document.getElementById('modalMealName').value.trim();
+        const portionInput = document.getElementById('modalPortion').value.trim() || 'Your planned portion';
+
+        if (nameInput && pendingModalDay && pendingModalSlot) {
+          custom[pendingModalSlot][nameInput] = [portionInput, []];
+          plan[pendingModalDay][pendingModalSlot] = nameInput;
+          persist();
+          renderAll();
+          closeModal();
+          showToast(`Added "${nameInput}"`);
+        }
+      });
     });
-    el.appendChild(card);
-  });
-}
-
-document.getElementById('addShopBtn').onclick=()=>{
-  const inp=document.getElementById('shopInput'),v=inp.value.trim();
-  if(v&&!manual.includes(v)){
-    manual.push(v);inp.value='';persist();renderShop();
-  }
-};
-document.getElementById('clearCheckedBtn').onclick=()=>{
-  checked={};persist();renderShop();toast('Cleared checked items');
-};
-document.getElementById('copyListBtn').onclick=async()=>{
-  const list=[...ingredients(),...manual].filter(x=>!checked[x]);
-  try{
-    await navigator.clipboard.writeText(list.join('\n'));
-    toast('Shopping list copied ✓');
-  }catch{
-    prompt('Copy list:',list.join('\n'));
-  }
-};
-
-document.getElementById('saveWeekBtn').onclick=()=>{
-  localStorage.setItem('my108-plan',JSON.stringify(plan));
-  toast('Week plan saved ✓');
-};
-document.getElementById('resetWeekBtn').onclick=()=>{
-  if(confirm('Reset planner to default suggested week?')){
-    plan=JSON.parse(JSON.stringify(S));
-    persist();renderAll();
-    toast('Restored default week');
-  }
-};
-
-function renderAll(){
-  renderTodayOverview();
-  renderPlanner();
-  renderShop();
-}
-
-renderAll();
-</script>
+  </script>
 </body>
 </html>

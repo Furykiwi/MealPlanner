@@ -177,10 +177,12 @@
   }
 
   /* Dynamic select and inputs */
-  select, input {
+  select, input[type="text"] {
     background-color: var(--theme-input-bg);
     color: var(--theme-text-main);
     border-color: var(--theme-border);
+    min-height: 44px;
+    -webkit-appearance: none;
   }
 
   /* iOS Active Press Response */
@@ -192,18 +194,54 @@
     opacity: 0.9;
   }
 
-  select, input, button {
-    min-height: 44px;
-    -webkit-appearance: none;
+  /* CUSTOM HIGH-VISIBILITY CHECKBOX STYLING */
+  .custom-checkbox {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    border: 2px solid var(--theme-border);
+    background-color: var(--theme-card-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
   }
 
-  /* Checkbox Customization */
-  input[type="checkbox"] {
-    min-height: auto;
-    width: 20px;
-    height: 20px;
+  .custom-checkbox.checked {
+    background-color: var(--theme-accent);
+    border-color: var(--theme-accent);
+  }
+
+  /* CUSTOM TOGGLE SWITCH STYLING */
+  .custom-switch {
+    width: 46px;
+    height: 26px;
+    border-radius: 13px;
+    background-color: var(--theme-border);
+    padding: 2px;
+    display: flex;
+    align-items: center;
     cursor: pointer;
-    accent-color: var(--theme-accent);
+    transition: background-color 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .custom-switch.on {
+    background-color: var(--theme-accent);
+  }
+
+  .custom-switch-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .custom-switch.on .custom-switch-thumb {
+    transform: translateX(20px);
   }
 
   /* SVG Radial Progress Animation Transition */
@@ -252,7 +290,7 @@
     <!-- ================= ROUTINE TAB ================= -->
     <section id="routine" class="tab-content space-y-4">
       
-      <!-- Defrost / Active Alert Banner -->
+      <!-- Defrost Alert Banner -->
       <div id="activeAlertBanner" class="ios-card p-4 border-l-4 hidden flex items-start justify-between gap-3" style="border-left-color: var(--theme-accent); background-color: var(--theme-card-subtle);">
         <div class="flex items-start gap-2.5">
           <span class="text-xl">🥩</span>
@@ -318,12 +356,10 @@
           <span class="text-xs font-semibold" style="color: var(--theme-accent);">10:00 AM – 8:00 PM</span>
         </div>
 
-        <div id="todayMealsGrid" class="grid grid-cols-2 gap-2.5 pt-1">
-          <!-- Injected dynamically -->
-        </div>
+        <div id="todayMealsGrid" class="grid grid-cols-2 gap-2.5 pt-1"></div>
       </div>
 
-      <!-- Mindset Rule Banner -->
+      <!-- Mindset Banner -->
       <div class="ios-card p-4 border-l-4" style="border-left-color: var(--theme-accent); background-color: var(--theme-card-subtle);">
         <h3 class="text-sm font-bold text-brand-textMain flex items-center gap-1.5 mb-1">
           <span style="color: var(--theme-accent);">♥</span>
@@ -356,9 +392,7 @@
           </div>
         </div>
 
-        <div class="pt-2 border-t border-brand-border/40 space-y-1.5" id="rulesList">
-          <!-- Rules dynamically rendered -->
-        </div>
+        <div class="pt-2 border-t border-brand-border/40 space-y-1.5" id="rulesList"></div>
       </div>
     </section>
 
@@ -472,7 +506,7 @@
     </div>
   </div>
 
-  <!-- Notifications & Reminders Settings Modal (FIXED CONTRAST & CHECKBOXES) -->
+  <!-- Notifications & Reminders Settings Modal -->
   <div id="notifModalOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-200">
     <div class="ios-card max-w-sm w-full p-5 space-y-4 shadow-2xl scale-95 transition-transform duration-200">
       <div class="flex items-center justify-between border-b border-brand-border/60 pb-3">
@@ -500,31 +534,31 @@
           💡 <strong>iPhone Note:</strong> Save to Home Screen to receive popups & sounds when screen is locked.
         </p>
 
-        <!-- Toggle List -->
-        <div class="space-y-2 pt-1 border-t border-brand-border/50">
-          <label class="flex items-center justify-between p-2.5 rounded-xl border border-brand-border cursor-pointer" style="background-color: var(--theme-card-subtle);">
+        <!-- Toggle Switch List -->
+        <div class="space-y-2.5 pt-1 border-t border-brand-border/50">
+          <div class="flex items-center justify-between p-2.5 rounded-xl border border-brand-border" style="background-color: var(--theme-card-subtle);">
             <div>
               <div class="font-bold text-brand-textMain">Fasting Window Alerts</div>
               <div class="text-[10px] text-brand-textMuted">10:00 AM Eating Start & 8:00 PM Fast Start</div>
             </div>
-            <input type="checkbox" id="cfgNotifWindow" class="w-5 h-5 rounded">
-          </label>
+            <div class="custom-switch" id="switchNotifWindow"><div class="custom-switch-thumb"></div></div>
+          </div>
 
-          <label class="flex items-center justify-between p-2.5 rounded-xl border border-brand-border cursor-pointer" style="background-color: var(--theme-card-subtle);">
+          <div class="flex items-center justify-between p-2.5 rounded-xl border border-brand-border" style="background-color: var(--theme-card-subtle);">
             <div>
               <div class="font-bold text-brand-textMain">Mealtime Reminders</div>
               <div class="text-[10px] text-brand-textMuted">Breakfast (10 AM), Lunch (1:30 PM), Dinner (6 PM)</div>
             </div>
-            <input type="checkbox" id="cfgNotifMeals" class="w-5 h-5 rounded">
-          </label>
+            <div class="custom-switch" id="switchNotifMeals"><div class="custom-switch-thumb"></div></div>
+          </div>
 
-          <label class="flex items-center justify-between p-2.5 rounded-xl border border-brand-border cursor-pointer" style="background-color: var(--theme-card-subtle);">
+          <div class="flex items-center justify-between p-2.5 rounded-xl border border-brand-border" style="background-color: var(--theme-card-subtle);">
             <div>
               <div class="font-bold text-brand-textMain">Morning Meat Defrost Alert</div>
               <div class="text-[10px] text-brand-textMuted">8:00 AM alert to take meat/frozen veg out for dinner</div>
             </div>
-            <input type="checkbox" id="cfgNotifDefrost" class="w-5 h-5 rounded">
-          </label>
+            <div class="custom-switch" id="switchNotifDefrost"><div class="custom-switch-thumb"></div></div>
+          </div>
         </div>
 
         <div class="pt-2">
@@ -1249,7 +1283,7 @@
       return 'OTHER';
     }
 
-    // Shopping List Renderer
+    // Shopping List Renderer (CUSTOM VISIBLE CHECKBOXES)
     function renderShopping() {
       const container = document.getElementById('shoppingCategoryGrid');
       if (!container) return;
@@ -1280,13 +1314,15 @@
               const isManual = manual.includes(item);
 
               return `
-                <label class="flex items-center justify-between p-2 rounded-xl hover:bg-brand-bg transition-colors cursor-pointer text-xs ${isChecked ? 'line-through text-brand-textMuted opacity-60' : 'text-brand-textMain'}">
+                <div data-item-row="${item}" class="btn-shop-row flex items-center justify-between p-2 rounded-xl hover:bg-brand-bg transition-colors cursor-pointer text-xs ${isChecked ? 'line-through text-brand-textMuted opacity-60' : 'text-brand-textMain'}">
                   <div class="flex items-center gap-2.5 flex-1">
-                    <input type="checkbox" data-item="${item}" class="chk-item w-5 h-5 rounded" ${isChecked ? 'checked' : ''}>
+                    <div class="custom-checkbox ${isChecked ? 'checked' : ''}">
+                      ${isChecked ? '<svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>' : ''}
+                    </div>
                     <span class="font-medium text-brand-textMain">${item}</span>
                   </div>
-                  ${isManual ? `<button data-item="${item}" class="btn-del-manual text-red-400 font-bold px-2 py-0.5 rounded text-xs active:bg-red-500/10">✕</button>` : ''}
-                </label>
+                  ${isManual ? `<button data-del-manual="${item}" class="text-red-400 font-bold px-2 py-0.5 rounded text-xs active:bg-red-500/10">✕</button>` : ''}
+                </div>
               `;
             }).join('')}
           </div>
@@ -1295,19 +1331,20 @@
         container.appendChild(catCard);
       });
 
-      document.querySelectorAll('.chk-item').forEach(chk => {
-        chk.addEventListener('change', (e) => {
-          const item = e.target.dataset.item;
-          checked[item] = e.target.checked;
+      document.querySelectorAll('.btn-shop-row').forEach(row => {
+        row.addEventListener('click', (e) => {
+          if (e.target.closest('[data-del-manual]')) return;
+          const item = row.dataset.itemRow;
+          checked[item] = !checked[item];
           persist();
           renderShopping();
         });
       });
 
-      document.querySelectorAll('.btn-del-manual').forEach(btn => {
+      document.querySelectorAll('[data-del-manual]').forEach(btn => {
         btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          const item = e.currentTarget.dataset.item;
+          e.stopPropagation();
+          const item = e.currentTarget.dataset.delManual;
           manual = manual.filter(x => x !== item);
           persist();
           renderShopping();
@@ -1380,7 +1417,7 @@
       document.getElementById('themeModalClose').addEventListener('click', closeThemeModal);
       document.getElementById('manageCustomClose').addEventListener('click', closeManageCustomModal);
 
-      // Notification Settings Modal Bindings
+      // Notification Switch Setup
       const notifModalOverlay = document.getElementById('notifModalOverlay');
       const btnOpenNotifModal = document.getElementById('btnOpenNotifModal');
       const notifModalClose = document.getElementById('notifModalClose');
@@ -1388,9 +1425,9 @@
       const btnTestNotif = document.getElementById('btnTestNotif');
       const btnDismissAlert = document.getElementById('btnDismissAlert');
 
-      const cfgWindow = document.getElementById('cfgNotifWindow');
-      const cfgMeals = document.getElementById('cfgNotifMeals');
-      const cfgDefrost = document.getElementById('cfgNotifDefrost');
+      const switchWindow = document.getElementById('switchNotifWindow');
+      const switchMeals = document.getElementById('switchNotifMeals');
+      const switchDefrost = document.getElementById('switchNotifDefrost');
       const permStatus = document.getElementById('notifPermStatus');
 
       function updateNotifModalUI() {
@@ -1405,11 +1442,29 @@
           permStatus.textContent = 'Not supported in browser';
         }
 
-        cfgWindow.checked = !!notifConfig.window;
-        cfgMeals.checked = !!notifConfig.meals;
-        cfgDefrost.checked = !!notifConfig.defrost;
+        switchWindow.className = `custom-switch ${notifConfig.window ? 'on' : ''}`;
+        switchMeals.className = `custom-switch ${notifConfig.meals ? 'on' : ''}`;
+        switchDefrost.className = `custom-switch ${notifConfig.defrost ? 'on' : ''}`;
         updateNotifBadge();
       }
+
+      switchWindow.addEventListener('click', () => {
+        notifConfig.window = !notifConfig.window;
+        persistNotifConfig();
+        updateNotifModalUI();
+      });
+
+      switchMeals.addEventListener('click', () => {
+        notifConfig.meals = !notifConfig.meals;
+        persistNotifConfig();
+        updateNotifModalUI();
+      });
+
+      switchDefrost.addEventListener('click', () => {
+        notifConfig.defrost = !notifConfig.defrost;
+        persistNotifConfig();
+        updateNotifModalUI();
+      });
 
       btnOpenNotifModal.addEventListener('click', () => {
         updateNotifModalUI();
@@ -1432,21 +1487,6 @@
             showToast('Permission denied');
           }
         }
-      });
-
-      cfgWindow.addEventListener('change', (e) => {
-        notifConfig.window = e.target.checked;
-        persistNotifConfig();
-      });
-
-      cfgMeals.addEventListener('change', (e) => {
-        notifConfig.meals = e.target.checked;
-        persistNotifConfig();
-      });
-
-      cfgDefrost.addEventListener('change', (e) => {
-        notifConfig.defrost = e.target.checked;
-        persistNotifConfig();
       });
 
       btnTestNotif.addEventListener('click', () => {
